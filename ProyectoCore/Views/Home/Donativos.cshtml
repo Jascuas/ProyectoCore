@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewData["Title"] = "Donativos";
+}
+
+<h2>Donativos</h2>
+
+@using (Html.BeginForm())
+{
+    <div>
+        <label>Introduzca su nombre: </label>
+        <input type="text" name="nombre" class="form-control" />
+    </div>
+    <div>
+        <label>Donativo: </label>
+        <input type="text" name="donativo" class="form-control" />
+    </div>
+    <div>
+        <button type="submit" class="btn-default">
+            Enviar donativo
+        </button>
+    </div>
+}
+<h1 style="color:blue">
+    @ViewData["MENSAJE"]
+</h1>

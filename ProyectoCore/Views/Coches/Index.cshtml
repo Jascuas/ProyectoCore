@@ -1,0 +1,16 @@
+﻿@model ProyectoCore.Models.ICoche
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Mi coche</h2>
+<h1>Marca: @Model.Marca, Modelo: @Model.Modelo</h1>
+<img  src="~/images/@Model.Imagen" style="width:300px; height:300px"/>
+<form method="post">
+    <div>
+        <button type="submit" class="alert-success" name="action" value="acelerar">Acelerar</button>
+        <button type="submit" class="alert-danger" name="action" value="frenar">Frenar</button>
+    </div>
+</form>
+<h3>Velocidad actual: @Model.VelocidadActual</h3>
+<h3>Velocidad despues: @ViewData["MENSAJE"]</h3>

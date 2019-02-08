@@ -1,0 +1,78 @@
+﻿
+@{
+    ViewBag.Title = "Registro";
+}
+<div class="container ">
+    <section class="my-4 pt-4">
+        <div class="card col-lg-6 mx-auto ">
+            <div class="card-body ">
+                <!--Section heading-->
+                <h2 class="h1-responsive font-weight-bold text-center mb-4">Registro</h2>
+                <!--Section description-->
+
+
+                <div class="row">
+
+                    <!--Grid column-->
+                    <div class="col-lg-12 mb-lg-0 mb-5">
+                        <form id="contact-form" name="contact-form" action="mail.php" method="POST">
+                            <div class="row">
+
+                                <!--Grid column-->
+                                <div class="col-lg-6">
+                                    <div class="md-form mb-0">
+                                        <input type="text" id="nombre" name="nombre" class="form-control">
+                                        <label for="nombre" class="">Nombre</label>
+                                    </div>
+                                </div>
+                                <!--Grid column-->
+                                <!--Grid column-->
+                                <div class="col-lg-6">
+                                    <div class="md-form mb-0">
+                                        <input type="text" id="apellidos" name="apellidos" class="form-control">
+                                        <label for="apellidos" class="">Apellidos</label>
+                                    </div>
+                                </div>
+                                <!--Grid column-->
+
+                            </div>
+                            <!--Grid row-->
+                            <!--Grid row-->
+                            <!--Grid row-->
+                            <div class="row">
+
+                                <!--Grid column-->
+                                <div class="col-lg-6">
+                                    <div class="md-form mb-0">
+                                        <input type="email" id="email" name="email" class="form-control">
+                                        <label for="email" class="">Email</label>
+                                    </div>
+                                </div>
+                                <!--Grid column-->
+                                <!--Grid column-->
+                                <div class="col-lg-6">
+                                    <div class="md-form mb-0">
+                                        <input type="text" id="password" name="password" class="form-control">
+                                        <label for="password" class="">Password</label>
+                                    </div>
+                                </div>
+                                <!--Grid column-->
+
+                            </div>
+                            <!--Grid row-->
+                            <!--Grid row-->
+
+
+                        </form>
+
+                        <div class="text-center text-md-left mt-4">
+                            <a class="btn btn-primary" onclick="document.getElementById('contact-form').submit();">Registrarse</a>
+                        </div>
+                        <div class="status"></div>
+                    </div>
+                    <!--Grid column-->
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

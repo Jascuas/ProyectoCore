@@ -1,0 +1,89 @@
+﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
+
+    <title>Mi Aplicación Core</title>
+    <environment include="Development">
+        <link href="~/css/bootstrap.css" rel="stylesheet" />
+        <link href="~/css/starter-template.css" rel="stylesheet" />
+        <link href="~/css/cookiealert.css" rel="stylesheet" />
+    </environment>
+    <environment include="Production">
+        <link href="~/css/bootstrap.css" rel="stylesheet" />
+        <link href="~/css/starter-template.css" rel="stylesheet" />
+        <link href="~/css/cookiealert.css" rel="stylesheet" />
+    </environment>
+    @RenderSection("styles", false);
+    @Html.Raw(JavaScriptSnippet.FullScript)
+
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a asp-action="Index" asp-controller="Home" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a asp-action="About" asp-controller="Home" asp-route-usuario="Alumno" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a asp-area="Admin" asp-action="Index" asp-controller="Admin" class="nav-link">Admin</a>
+                </li>
+                <li class="nav-item">
+                    <a asp-action="Index" asp-controller="Departamentos" class="nav-link">Departamentos</a>
+                </li>
+                <li class="nav-item">
+                    <a asp-action="Index" asp-controller="Coches" class="nav-link">Coches</a>
+                </li>
+                <li class="nav-item">
+                    <a asp-action="Donativos" class="nav-link" asp-controller="Home">Donativos</a>
+                </li>
+                <li class="nav-item">
+                    <a asp-action="MiSesion" class="nav-link" asp-controller="Home">Session</a>
+                </li>
+                <li class="nav-item">
+                    <a asp-action="AboutSession" class="nav-link" asp-controller="Home">Session Objeto</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+    <partial name="_PartialCookieConsent" />
+    <main role="main" class="container">
+        @RenderBody()
+        <div class="starter-template">
+            <h1>Bootstrap starter template</h1>
+            <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
+        </div>
+    </main><!-- /.container -->
+    <!-- Bootstrap core JavaScript -->
+    <environment include="Development">
+        <script src="~/js/jquery-3.3.1.min.js"></script>
+        <script src="~/js/bootstrap.js"></script>
+        <script src="~/js/cookiealert.js"></script>
+    </environment>
+    <environment include="Production">
+        <script src="~/js/jquery-3.3.1.min.js"></script>
+        <script src="~/js/bootstrap.js"></script>
+        <script src="~/js/cookiealert.js"></script>
+    </environment>
+    @RenderSection("scripts", false)
+</body>
+</html>
