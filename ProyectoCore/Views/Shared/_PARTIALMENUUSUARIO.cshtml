@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "_PartialMenuUsuario";
+}
+<ul class="m-auto">
+    @if (Context.User.Identity.IsAuthenticated == false)
+    {
+        <li class="nav-item">
+            <a asp-action="Login" class="nav-link" asp-controller="Validacion">
+                Log In
+            </a>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a asp-action="CerrarSesion" class="nav-link" asp-controller="Validacion">
+                Cerrar sesión <span style="color:white">@Context.User.Identity.Name</span>
+            </a>
+        </li>
+    }
+</ul>

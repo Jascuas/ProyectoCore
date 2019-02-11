@@ -24,12 +24,12 @@ namespace SeguridadMicrosoft
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(this.configuration.GetConnectionString("cadenaaspnet")));
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(configuration["Hospital:ConnectionString"]));
             services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddAuthentication().AddMicrosoftAccount(microsoftOptions =>
             {
-                microsoftOptions.ClientId = "f9caf254-4697-442e-a18a-b0a3429eaf8e";
-                microsoftOptions.ClientSecret = "dwelpEWE8%(;vfXGEZ8304=";
+                microsoftOptions.ClientId = configuration["Authentication:Microsoft:ApplicationId"];
+                microsoftOptions.ClientSecret = configuration["Authentication:Microsoft:Password"];
             });
 
 

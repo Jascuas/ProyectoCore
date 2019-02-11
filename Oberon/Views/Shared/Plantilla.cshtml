@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="favicon.ico">
+    <link rel="icon" type="image/x-icon" href="~/images/Oberon.png">
 
     <title>Oberon</title>
    
@@ -41,7 +41,7 @@
     <header>
         <nav class="navbar fixed-top navbar-expand-lg navbar-light scrolling-navbar top-nav-collapse" style="background-color:rgba(255, 255, 255, 0.8)">
             <a class="navbar-brand waves-effect" href="@Url.Action("Index", "Home")">
-                <img src="https://static.wixstatic.com/media/d5ee69_b04f1ceca5734731a7caa117f342308c~mv2_d_3332_3032_s_4_2.png/v1/fill/w_286,h_85,al_c,q_80,usm_0.66_1.00_0.01/d5ee69_b04f1ceca5734731a7caa117f342308c~mv2_d_3332_3032_s_4_2.webp" height="60" alt="mdb logo">
+                <img src="~/images/Logo.webp" height="60" alt="mdb logo">
             </a>
             <!-- Collapse -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -173,7 +173,10 @@
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.6.0/js/mdb.min.js"></script>
         <script src="~/js/cookiealert.js"></script>
     </environment>
-
+    <script>
+        // Animations initialization
+        new WOW().init();
+    </script>
     @RenderSection("scripts", false)
 
 </body>
