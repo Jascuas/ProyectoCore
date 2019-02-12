@@ -11,18 +11,13 @@ namespace ProyectoCore.Controllers
 {
     public class ValidacionController : Controller
     {
+
         public IActionResult Login()
         {
             return View();
         }
-        //[HttpPost]
-        //public IActionResult Login(String usuario, String password)
-        //{
-        //    return View();
-        //}
         [HttpPost]
-        public async Task<IActionResult>
-             Login(String usuario, String password)
+        public async Task<IActionResult>Login(String usuario, String password)
         {
             if (usuario == "admin" && password == "admin")
             {
