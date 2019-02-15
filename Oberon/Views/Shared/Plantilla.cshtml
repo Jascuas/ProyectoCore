@@ -71,30 +71,7 @@
 
                     </ul>
 
-                    <!-- Right -->
-                    @*<ul class="navbar-nav nav-flex-icons ">
-            <li class="nav-item">
-                <a class="nav-link waves-effect  hvr-underline-from-center">
-                    <span class="badge red z-depth-1 mr-1 "> 1 </span>
-                    <i class="fa fa-shopping-cart "></i>
-                    <span class="clearfix d-none d-sm-inline-block  "> Carrito </span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="https://github.com/mdbootstrap/bootstrap-material-design" class="nav-link  waves-effect  hvr-underline-from-center"
-                   target="_blank">
-                    <i class="fa fa-user mr-2"></i>Javier Sanchez
-                </a>
-            </li>
-        </ul>*@
-                    <ul class="navbar-nav nav-flex-icons ">
-                        <li class="nav-item">
-                            <a asp-action="Login" asp-controller="Validacion" class="nav-link hvr-underline-from-center @(@ViewContext.RouteData.Values["action"].ToString() == "Login" ? "active1" : "")">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a asp-action="Registro" asp-controller="Validacion" class="nav-link hvr-underline-from-center @(@ViewContext.RouteData.Values["action"].ToString() == "Registro" ? "active1" : "")">Registro</a>
-                        </li>
-                    </ul>
+                    <partial name="_MenuLogout" />
                 </div>
 
             </div>

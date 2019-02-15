@@ -12,7 +12,7 @@ namespace Oberon.Models
     {
         [Key]
         [Column("ID_USUARIO")]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        //[DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id_Usuario { get; set; }
         [Column("PASSWORD")]
         public String Password { get; set; }
@@ -27,14 +27,16 @@ namespace Oberon.Models
         [Column("ROLE")]
         public String Rol { get; set; }
         [Column("FECHA_REGISTRO")]
-        public DateTime Fecha_Registro { get; set; }
-        public Usuario(string password, string user, string nombre, string apellidos, string email)
+        public DateTime Fecha { get; set; }
+        public Usuario(string password, string user, string nombre, string apellidos, string email,string rol, DateTime fecha)
         {
             Password = password;
             User = user;
             Nombre = nombre;
             Apellidos = apellidos;
             Email = email;
+            Rol = rol;
+            Fecha = fecha;
         }
     }
 }

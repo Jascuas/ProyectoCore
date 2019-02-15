@@ -26,7 +26,9 @@ namespace Oberon.Repositories
         public void RegistrarUsuario(String password, String nombre, String apellidos, String email)
         {
             String user = nombre + " " + apellidos;
-            Usuario u = new Usuario(password, user, nombre, apellidos, email);
+            DateTime fecha = DateTime.Now;
+            String rol = "cliente";
+            Usuario u = new Usuario(password, user, nombre, apellidos, email, rol, fecha);
             this.context.Usuario.Add(u);
             this.context.SaveChanges();
         }

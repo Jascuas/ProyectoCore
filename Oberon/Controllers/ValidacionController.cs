@@ -48,12 +48,6 @@ namespace Oberon.Controllers
                 return View();
             }
         }
-        public async Task<IActionResult> CerrarSesion()
-        {
-            await HttpContext.SignOutAsync
-                (CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Index", "Home");
-        }
         public IActionResult Registro()
         {
             return View();
@@ -65,15 +59,32 @@ namespace Oberon.Controllers
             Usuario usuario = this.repo.ExisteUsuario(email, password);
             if (usuario != null)
             {
-                await Login(email, password);
+                ClaimsIdentity identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
+                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, usuario.Rol));
+                identity.AddClaim(new Claim(ClaimTypes.Name, usuario.User));
+                ClaimsPrincipal principal = new ClaimsPrincipal(identity);
+                await HttpContext.SignInAsync
+                    (CookieAuthenticationDefaults.AuthenticationScheme, principal
+                    , new AuthenticationProperties
+                    {
+                        IsPersistent = true
+                    ,
+                        ExpiresUtc = DateTime.Now.AddMinutes(30)
+                    });
                 return RedirectToAction("Index", "Home");
             }
             else
             {
-                ViewBag.Mensaje = "Usuario/Password incorrectos";
+                ViewBag.Mensaje = "No hemos conseguido registrarle";
                 return View();
             }
             
+        }
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync
+                (CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Index", "Home");
         }
 
     }

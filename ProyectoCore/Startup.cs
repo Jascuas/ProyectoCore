@@ -40,11 +40,10 @@ namespace ProyectoCore
             String cadenadeconexion = this.configuration.GetConnectionString("cadenahospital");
             String cadenadeconexionmysql = this.configuration.GetConnectionString("cadenahospitalmysql");
             String cadenadeconexionazure = this.configuration.GetConnectionString("cadenahospitalazure");
-            //services.AddTransient<RepositoryHospital>();
-            //services.AddDbContext<HospitalContext>(options => options.UseSqlServer(cadenadeconexion));
+
             services.AddTransient<IRepositoryHospital, RepositoryHospital>();
-            services.AddDbContext<IHospitalContext, HospitalContext>(options => options.UseSqlServer(cadenadeconexionazure));
-            //services.AddDbContext<IHospitalContext, HospitalContext>(options => options.UseMySql(cadenadeconexionmysql));
+            //services.AddDbContext<IHospitalContext, HospitalContext>(options => options.UseSqlServer(cadenadeconexionazure));
+            services.AddDbContext<IHospitalContext, HospitalContext>(options => options.UseMySql(cadenadeconexionmysql));
 
             //services.AddTransient<ICoche, Deportivo>();
             services.AddSingleton<ICoche, Deportivo>(z => new Deportivo("Audi", "A4", "audi.jpg", 300, 0));
