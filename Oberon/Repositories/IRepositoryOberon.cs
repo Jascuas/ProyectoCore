@@ -10,5 +10,9 @@ namespace Oberon.Repositories
     {
         Usuario ExisteUsuario(String email, String password);
         void RegistrarUsuario(String password, String nombre, String apellidos, String email);
+        List<Producto> GetProductos();
+        List<Producto> GetProductos(String tipo);
+        Producto GetProducto(int id_producto);
+        
     }
 }

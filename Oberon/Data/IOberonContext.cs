@@ -10,6 +10,7 @@ namespace Oberon.Data
     public interface IOberonContext
     {
         DbSet<Usuario> Usuario { get; set; }
+        DbSet<Producto> Producto { get; set; }
         int SaveChanges();
     }
 }
