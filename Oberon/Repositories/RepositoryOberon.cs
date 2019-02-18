@@ -32,5 +32,20 @@ namespace Oberon.Repositories
             this.context.Usuario.Add(u);
             this.context.SaveChanges();
         }
+        public List<Producto> GetProductos()
+        {
+            var consulta = from datos in context.Producto select datos;
+            return consulta.ToList();
+        }
+        public List<Producto> GetProductos(String tipo)
+        {
+            var consulta = from datos in context.Producto where datos.Tipo == tipo select datos;
+            return consulta.ToList();
+        }
+        public Producto GetProducto(int id_producto)
+        {
+            var consulta = from datos in context.Producto where datos.Id_Producto == id_producto select datos;
+            return consulta.FirstOrDefault();
+        }
     }
 }
