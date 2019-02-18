@@ -26,6 +26,10 @@ namespace Oberon.Controllers
         {
             return View();
         }
+        public IActionResult Producto()
+        {
+            return View();
+        }
 
     }
 }
