@@ -23,15 +23,16 @@ namespace Oberon.Models
         [Column("STOCK")]
         public int Stock { get; set; }
         [Column("PRECIO")]
-        public int Precio { get; set; }
+        public double Precio { get; set; }
         [Column("INFORMACION")]
         public String Informacion { get; set; }
         [Column("IMAGEN")]
         public String Imagen { get; set; }
         [Column("ESTADO")]
         public String Estado { get; set; }
-
-        public Producto(string nombre, string color, string tipo, int stock, int precio, string informacion, string imagen, string estado)
+        [Column("DETALLES")]
+        public String Detalles { get; set; }
+        public Producto(string nombre, string color, string tipo, int stock, double precio, string informacion, string imagen, string estado, string detalles)
         {
             Nombre = nombre;
             Color = color;
@@ -41,6 +42,7 @@ namespace Oberon.Models
             Informacion = informacion;
             Imagen = imagen;
             Estado = estado;
+            Detalles = detalles;
         }
     }
 }
