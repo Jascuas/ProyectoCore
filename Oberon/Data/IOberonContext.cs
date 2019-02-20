@@ -11,6 +11,7 @@ namespace Oberon.Data
     {
         DbSet<Usuario> Usuario { get; set; }
         DbSet<Producto> Producto { get; set; }
+        DbSet<Talla> Talla { get; set; }
         int SaveChanges();
     }
 }

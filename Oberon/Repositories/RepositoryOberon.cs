@@ -47,5 +47,23 @@ namespace Oberon.Repositories
             var consulta = from datos in context.Producto where datos.Id_Producto == id_producto select datos;
             return consulta.FirstOrDefault();
         }
+
+        public Talla GetTalla(int id_talla)
+        {
+            var consulta = from datos in context.Talla where datos.Id_Talla == id_talla select datos;
+            return consulta.FirstOrDefault();
+        }
+
+        public List<Talla> GetTallasProducto(int id_producto)
+        {
+            var consulta = from datos in context.Talla where datos.Id_Producto == id_producto select datos;
+            return consulta.ToList();
+        }
+
+        public List<Talla> GetTallas()
+        {
+            var consulta = from datos in context.Talla select datos;
+            return consulta.ToList();
+        }
     }
 }

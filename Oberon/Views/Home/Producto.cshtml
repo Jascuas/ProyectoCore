@@ -1,5 +1,18 @@
-﻿@model Oberon.Models.Producto
+﻿@using Oberon.Models;
+@model Oberon.Models.ProductoTalla
 
+@section scripts{ 
+    <script>
+        
+        $(document).ready(function () {
+            var precio = $("#precio").text();
+            $("#cantidad").on("change, mouseup, keyup, click", function () {
+                $("#precio").text(precio * $("#cantidad").val());
+                
+            });
+        });
+    </script>
+}
 <div class="container mt-5 pt-5">
     <section class="my-5">
 
@@ -11,11 +24,11 @@
             <div class="col-lg-6">
 
                 <!-- Featured image -->
-                <div class="view overlay rounded z-depth-2 mb-lg-0 mb-4">
-                    <img class="img-fluid" src="~/images/Productos/@Model.Imagen" alt="Sample image">
-                    <a>
+                <div class=" mb-lg-0 mb-4">
+                    <img class="view overlay rounded z-depth-2 img-fluid img-" src="~/images/Productos/@Model.producto.Imagen" alt="Sample image">
+                    @*<a>
                         <div class="mask rgba-white-slight"></div>
-                    </a>
+                    </a>*@
                 </div>
 
             </div>
@@ -24,25 +37,30 @@
             <div class="col-lg-6">
                 <!-- Post title -->
                 <h6 class="grey-text">Tipo: </h6>
-                <h3 class="font-weight-bold mb-3"><strong>@Model.Nombre</strong></h3>
+                <h3 class="font-weight-bold mb-3"><strong>@Model.producto.Nombre</strong></h3>
 
                 <h6 class="grey-text">Tallas: </h6>
-                <h5>S | M | L</h5>
+
+                @Html.Raw(@Model.html)
+
                 <h6 class="grey-text">Unidades: </h6>
-                <h5>1</h5>
+                <div class="md-form">
+                    <input type="number" id="cantidad" class="form-control-sm" value="1" min="1" max="@Model.stock">
+                    <label for="numberExample"></label>
+                </div>
                 <!-- Excerpt -->
                 <!-- Post data -->
                 <h6 class="grey-text">Precio: </h6>
-                <h5><strong>@Model.Precio€</strong></h5>
+                <h5 class="text-primary" ><span id="precio">@Model.producto.Precio</span>€</h5>
                 <br />
                 <!-- Read more button -->
                 <a class="btn btn-info btn-md">Comprar</a>
                 <hr />
                 <h6 class="grey-text">Detalles: </h6>
                 <p>
-                    @Model.Detalles
+                    @Model.producto.Detalles
                 </p>
-                
+
 
             </div>
             <!-- Grid column -->
@@ -50,7 +68,7 @@
                 
                 <h6 class="grey-text">Informacion: </h6>
                 <p>
-                    @Model.Informacion
+                    @Model.producto.Informacion
                 </p>
             </div>
             </div>

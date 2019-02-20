@@ -13,6 +13,8 @@ namespace Oberon.Repositories
         List<Producto> GetProductos();
         List<Producto> GetProductos(String tipo);
         Producto GetProducto(int id_producto);
-        
+        Talla GetTalla(int id_talla);
+        List<Talla> GetTallasProducto(int id_producto);
+        List<Talla> GetTallas();
     }
 }

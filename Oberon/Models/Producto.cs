@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Oberon.Models
 {
     [Table("PRODUCTOS")]
-    public class Producto
+    public class Producto 
     {
         [Key]
         [Column("ID_PRODUCTO")]
@@ -20,8 +20,7 @@ namespace Oberon.Models
         public String Color { get; set; }
         [Column("TIPO")]
         public String Tipo { get; set; }
-        [Column("STOCK")]
-        public int Stock { get; set; }
+
         [Column("PRECIO")]
         public double Precio { get; set; }
         [Column("INFORMACION")]
@@ -32,12 +31,11 @@ namespace Oberon.Models
         public String Estado { get; set; }
         [Column("DETALLES")]
         public String Detalles { get; set; }
-        public Producto(string nombre, string color, string tipo, int stock, double precio, string informacion, string imagen, string estado, string detalles)
+        public Producto(string nombre, string color, string tipo, double precio, string informacion, string imagen, string estado, string detalles)
         {
             Nombre = nombre;
             Color = color;
             Tipo = tipo;
-            Stock = stock;
             Precio = precio;
             Informacion = informacion;
             Imagen = imagen;
