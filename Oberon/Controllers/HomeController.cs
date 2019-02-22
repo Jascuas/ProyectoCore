@@ -51,10 +51,24 @@ namespace Oberon.Controllers
         public IActionResult Producto(int id_producto)
         {
             Producto producto = repo.GetProducto(id_producto);
-            List<Talla> tallas= repo.GetTallasProducto(id_producto);
+            List<Talla> tallas = repo.GetTallasProducto(id_producto);
+            ViewBag.Tallas = tallas;
             ProductoTalla pro = new ProductoTalla(producto, tallas);
             return View(pro);
         }
+        [HttpPost]
+        public IActionResult Producto(int id_producto, int id_talla, int cantidad)
+        {
+            Talla talla = repo.GetTalla(id_talla);
+          
+            Producto producto = repo.GetProducto(id_producto);
+            List<Talla> tallas = repo.GetTallasProducto(id_producto);
+            ProductoTalla pro = new ProductoTalla(producto, tallas);
 
+            ProductoTalla carrito = new ProductoTalla(producto, talla, cantidad);
+
+            return View(pro);
+        }
+       
     }
 }

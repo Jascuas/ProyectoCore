@@ -3,16 +3,36 @@
 
 @section scripts{ 
     <script>
-        
+        var tallas =  @Html.Raw(Json.Serialize(@ViewBag.Tallas));
+        console.log(tallas);
+        var precio = $("#precio").text();
+
         $(document).ready(function () {
-            var precio = $("#precio").text();
-            $("#cantidad").on("change, mouseup, keyup, click", function () {
-                $("#precio").text(precio * $("#cantidad").val());
-                
+            cargarUnidades();
+            $("#tallas").change(function () {
+                cargarUnidades();
+            });
+            
+            $("#unidades").change(function () {
+                $("#precio").text(precio * $("#unidades").val());
             });
         });
+
+        function cargarUnidades() {
+            var id_talla = $("#tallas option:selected").val();
+            var html = "";
+            $(tallas).each(function (index, element) {
+                if (element.id_Talla == id_talla) {
+                    console.log(element.stock);
+                    for (i = 1; i <= element.stock; i++)
+                        html += "<option value='" + i + "'>" + i + "</option>";
+                }
+            });
+            $("#unidades").html(html);
+            $("#precio").text(precio * $("#unidades").val());
+        }
     </script>
-}
+} 
 <div class="container mt-5 pt-5">
     <section class="my-5">
 
@@ -27,8 +47,8 @@
                 <div class=" mb-lg-0 mb-4">
                     <img class="view overlay rounded z-depth-2 img-fluid img-" src="~/images/Productos/@Model.producto.Imagen" alt="Sample image">
                     @*<a>
-                        <div class="mask rgba-white-slight"></div>
-                    </a>*@
+                    <div class="mask rgba-white-slight"></div>
+                </a>*@
                 </div>
 
             </div>
@@ -40,18 +60,32 @@
                 <h3 class="font-weight-bold mb-3"><strong>@Model.producto.Nombre</strong></h3>
 
                 <h6 class="grey-text">Tallas: </h6>
-
-                @Html.Raw(@Model.html)
-
+                <select class='browser-default  custom-select-sm' id="tallas">
+                    @foreach (Talla t in @Model.tallas)
+                    {
+                        @if (t.Stock != 0)
+                        {
+                            @if (@Model.tallas.Count() > 1)
+                            {
+                                <option value="@t.Id_Talla" data-toggle="tooltip" data-placement="right">@t.Size </option>
+                            }
+                            else
+                            {
+                                <option value="@t.Id_Talla" selected> Talla unica </option>;
+                            }
+                        }
+                        else
+                        {
+                            <option value="@t.Id_Talla" data-toggle="tooltip" data-placement="right" disabled>Talla @t.Size - Agotada </option>
+                        }
+                    }
+                </select>
                 <h6 class="grey-text">Unidades: </h6>
-                <div class="md-form">
-                    <input type="number" id="cantidad" class="form-control-sm" value="1" min="1" max="@Model.stock">
-                    <label for="numberExample"></label>
-                </div>
+                <select class='browser-default  custom-select-sm' id="unidades"></select>
                 <!-- Excerpt -->
                 <!-- Post data -->
                 <h6 class="grey-text">Precio: </h6>
-                <h5 class="text-primary" ><span id="precio">@Model.producto.Precio</span>€</h5>
+                <h5 class="text-primary"><span id="precio">@Model.producto.Precio</span>€</h5>
                 <br />
                 <!-- Read more button -->
                 <a class="btn btn-info btn-md">Comprar</a>
@@ -64,14 +98,14 @@
 
             </div>
             <!-- Grid column -->
-            <div class="col-lg-6 mt-2" >
-                
+            <div class="col-lg-6 mt-2">
+
                 <h6 class="grey-text">Informacion: </h6>
                 <p>
                     @Model.producto.Informacion
                 </p>
             </div>
-            </div>
+        </div>
             <!-- Grid row -->
 
 
