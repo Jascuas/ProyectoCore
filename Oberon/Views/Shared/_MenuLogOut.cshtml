@@ -1,12 +1,14 @@
 ﻿@{
     ViewData["Title"] = "_PartialMenuUsuario";
 }
+
+
 <ul class="navbar-nav nav-flex-icons ">
     @if (Context.User.Identity.IsAuthenticated != false)
     {
         <li class="nav-item">
-            <a class="nav-link waves-effect  hvr-underline-from-center">
-                <span class="badge red z-depth-1 mr-1 "> 0 </span>
+            <a class="nav-link waves-effect  hvr-underline-from-center" data-toggle="modal" data-target="#modalCart">
+                <span class="badge red z-depth-1 mr-1 "> @HttpContextAccessor.HttpContext.Session.GetInt32("carritoCount")</span>
                 <i class="fa fa-shopping-cart "></i>
                 <span class="clearfix d-none d-sm-inline-block  "> Carrito </span>
             </a>
@@ -29,3 +31,6 @@
     }
 
 </ul>
+
+
+ 

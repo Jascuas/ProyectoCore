@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Oberon.Data;
 using Oberon.Repositories;
 
@@ -34,14 +35,15 @@ namespace Oberon
 
             services.AddTransient<IRepositoryOberon, RepositoryOberon>();
             services.AddDbContext<IOberonContext, OberonContext>(options => options.UseSqlServer(cadenadeconexionazure));
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddDistributedMemoryCache();
 
-            //services.AddDistributedMemoryCache();
-
-            //services.AddSession(options => {
-            //    options.IdleTimeout = TimeSpan.FromSeconds(30);
-            //    options.Cookie.HttpOnly = true;
-            //    options.Cookie.IsEssential = true;
-            //});
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(30);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
 
             services.AddAuthentication(options =>
             {
@@ -69,7 +71,7 @@ namespace Oberon
             //6. AUTH
             app.UseAuthentication();
             //7. UTILIZAMOS LA SESION
-            //app.UseSession();
+            app.UseSession();
             //8. DEBEMOS DAR LA RUTA DE INICIO
             //CONFIGURAMOS LAS AREAS
             app.UseMvc(routes =>

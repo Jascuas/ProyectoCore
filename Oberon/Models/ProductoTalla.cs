@@ -15,18 +15,9 @@ namespace Oberon.Models
             this.tallas = tallas;
             this.stock = generarStock();
         }
-        public ProductoTalla(Producto producto, Talla talla, int cantidad)
-        {
-            this.producto = producto;
-            this.talla = talla;
-            this.cantidad = cantidad;
-        }
         public Producto producto { get; set; }
         public List<Talla> tallas { get; set; }
         public int stock { get; set; }
-        public int cantidad { get; set; }
-        public Talla talla { get; set; }
-
         public int generarStock()
         {
             foreach (Talla t in tallas)

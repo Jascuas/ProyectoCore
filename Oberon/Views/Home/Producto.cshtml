@@ -4,12 +4,12 @@
 @section scripts{ 
     <script>
         var tallas =  @Html.Raw(Json.Serialize(@ViewBag.Tallas));
-        console.log(tallas);
+        
         var precio = $("#precio").text();
 
         $(document).ready(function () {
             cargarUnidades();
-            $("#tallas").change(function () {
+            $("#id_tallas").change(function () {
                 cargarUnidades();
             });
             
@@ -19,11 +19,10 @@
         });
 
         function cargarUnidades() {
-            var id_talla = $("#tallas option:selected").val();
+            var id_talla = $("#id_tallas option:selected").val();
             var html = "";
             $(tallas).each(function (index, element) {
                 if (element.id_Talla == id_talla) {
-                    console.log(element.stock);
                     for (i = 1; i <= element.stock; i++)
                         html += "<option value='" + i + "'>" + i + "</option>";
                 }
@@ -58,45 +57,49 @@
                 <!-- Post title -->
                 <h6 class="grey-text">Tipo: </h6>
                 <h3 class="font-weight-bold mb-3"><strong>@Model.producto.Nombre</strong></h3>
-
-                <h6 class="grey-text">Tallas: </h6>
-                <select class='browser-default  custom-select-sm' id="tallas">
-                    @foreach (Talla t in @Model.tallas)
-                    {
-                        @if (t.Stock != 0)
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" id="id_producto" name="id_producto" class="text-hide" value="@Model.producto.Id_Producto">
+                    <h6 class="grey-text">Tallas: </h6>
+                    <select class='browser-default  custom-select-sm' id="id_tallas" name="id_talla" >
+                        @foreach (Talla t in @Model.tallas)
                         {
-                            @if (@Model.tallas.Count() > 1)
+                            @if (t.Stock != 0)
                             {
-                                <option value="@t.Id_Talla" data-toggle="tooltip" data-placement="right">@t.Size </option>
+                                @if (@Model.tallas.Count() > 1)
+                                {
+                                    <option value="@t.Id_Talla" data-toggle="tooltip" data-placement="right">@t.Size </option>
+                                }
+                                else
+                                {
+                                    <option value="@t.Id_Talla" selected> Talla unica </option>;
+                                }
                             }
                             else
                             {
-                                <option value="@t.Id_Talla" selected> Talla unica </option>;
+                                <option value="@t.Id_Talla" data-toggle="tooltip" data-placement="right" disabled>Talla @t.Size - Agotada </option>
                             }
                         }
-                        else
-                        {
-                            <option value="@t.Id_Talla" data-toggle="tooltip" data-placement="right" disabled>Talla @t.Size - Agotada </option>
-                        }
-                    }
-                </select>
-                <h6 class="grey-text">Unidades: </h6>
-                <select class='browser-default  custom-select-sm' id="unidades"></select>
-                <!-- Excerpt -->
-                <!-- Post data -->
-                <h6 class="grey-text">Precio: </h6>
-                <h5 class="text-primary"><span id="precio">@Model.producto.Precio</span>€</h5>
-                <br />
-                <!-- Read more button -->
-                <a class="btn btn-info btn-md">Comprar</a>
-                <hr />
-                <h6 class="grey-text">Detalles: </h6>
-                <p>
-                    @Model.producto.Detalles
-                </p>
+                    </select>
+                    <h6 class="grey-text">Unidades: </h6>
+                    <select class='browser-default  custom-select-sm' id="unidades" name="unidades"></select>
+                    <!-- Excerpt -->
+                    <!-- Post data -->
+                    <h6 class="grey-text">Precio: </h6>
+                    <h5 class="text-primary"><span id="precio">@Model.producto.Precio</span>€</h5>
+                    <br />
+                    <!-- Read more button -->
+                    <button type="submit" class="btn btn-primary">Comprar</button>
+                    <hr />
+                    <h6 class="grey-text">Detalles: </h6>
+                    <p>
+                        @Model.producto.Detalles
+                    </p>
 
-
+                }
             </div>
+
             <!-- Grid column -->
             <div class="col-lg-6 mt-2">
 

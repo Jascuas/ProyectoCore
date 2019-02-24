@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Oberon.Models;
 using Oberon.Repositories;
-
+using Oberon.Extensions;
 namespace Oberon.Controllers
 {
     public class HomeController : Controller
@@ -57,16 +58,36 @@ namespace Oberon.Controllers
             return View(pro);
         }
         [HttpPost]
-        public IActionResult Producto(int id_producto, int id_talla, int cantidad)
+        [ValidateAntiForgeryToken]
+        public IActionResult Producto(int id_producto, int id_talla, int unidades)
         {
-            Talla talla = repo.GetTalla(id_talla);
-          
+            
             Producto producto = repo.GetProducto(id_producto);
             List<Talla> tallas = repo.GetTallasProducto(id_producto);
+            ViewBag.Tallas = tallas;
             ProductoTalla pro = new ProductoTalla(producto, tallas);
 
-            ProductoTalla carrito = new ProductoTalla(producto, talla, cantidad);
+            Carro carro = HttpContext.Session.GetObject<Carro>("carro");
 
+
+            Talla talla = repo.GetTalla(id_talla);
+            ProductoCarro productoCarro = new ProductoCarro(pro, talla, unidades);
+            
+            if (carro != null)
+            {
+                carro.Productos.Add(productoCarro);
+                HttpContext.Session.SetObject<Carro>("carro", carro);
+                HttpContext.Session.SetInt32("carritoCount", carro.Productos.Count());
+            }
+            else
+            {
+                List<ProductoCarro> productos = new List<ProductoCarro>();
+                productos.Add(productoCarro);
+                Carro carronuevo = new Carro(productos);
+                HttpContext.Session.SetObject<Carro>("carro", carronuevo);
+                HttpContext.Session.SetInt32("carritoCount", 1);
+            }
+            
             return View(pro);
         }
        

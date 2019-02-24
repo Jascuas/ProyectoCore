@@ -1,0 +1,58 @@
+﻿<!-- Modal: modalCart -->
+@using Oberon.Extensions;
+@using Oberon.Models;
+@{
+    Carro carro = HttpContextAccessor.HttpContext.Session.GetObject<Carro>("carro");
+}
+<div class="modal fade" id="modalCart" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <!--Header-->
+            <div class="modal-header">
+                <img src="~/images/Oberon.png" height="40" alt="mdb logo" class="mr-2">
+                <h4 class="modal-title" id="myModalLabel">Tu carrito</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="text-danger">×</span>
+                </button>
+            </div>
+            <!--Body-->
+            <div class="modal-body">
+                @if (carro != null)
+                {
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Producto</th>
+                                <th>Talla</th>
+                                <th>Cantidad</th>
+                                <th>Precio</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (ProductoCarro p in carro.Productos)
+                            {
+                                <tr>
+                                    <td>@p.Producto.producto.Nombre</td>
+                                    <td>@p.Talla.Size</td>
+                                    <td>@p.unidades</td>
+                                    <td>@p.Producto.producto.Precio</td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <h4 class="modal-title text-warning" id="myModalLabel">Aun no has añadido productos a tu carro</h4>
+                }
+                </div>
+            <!--Footer-->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-danger " data-dismiss="modal">Cerrar</button>
+                <button class="btn btn-primary">Ver carrito completo</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal: modalCart -->
