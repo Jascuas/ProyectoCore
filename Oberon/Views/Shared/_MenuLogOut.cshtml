@@ -8,7 +8,12 @@
     {
         <li class="nav-item">
             <a class="nav-link waves-effect  hvr-underline-from-center" data-toggle="modal" data-target="#modalCart">
-                <span class="badge red z-depth-1 mr-1 "> @HttpContextAccessor.HttpContext.Session.GetInt32("carritoCount")</span>
+                @if (@HttpContextAccessor.HttpContext.Session.GetInt32("carritoCount") != null)
+                {
+                <span class="badge red z-depth-1 mr-1 ">
+                    @HttpContextAccessor.HttpContext.Session.GetInt32("carritoCount")
+                </span>
+                }
                 <i class="fa fa-shopping-cart "></i>
                 <span class="clearfix d-none d-sm-inline-block  "> Carrito </span>
             </a>

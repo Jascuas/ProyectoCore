@@ -1,10 +1,8 @@
 ﻿@using Oberon.Models;
 @model Oberon.Models.ProductoTalla
-
-@section scripts{ 
+@section scripts{
     <script>
-        var tallas =  @Html.Raw(Json.Serialize(@ViewBag.Tallas));
-        
+        var tallas =  @Json.Serialize(@ViewBag.Tallas);
         var precio = $("#precio").text();
 
         $(document).ready(function () {
@@ -12,7 +10,7 @@
             $("#id_tallas").change(function () {
                 cargarUnidades();
             });
-            
+
             $("#unidades").change(function () {
                 $("#precio").text(precio * $("#unidades").val());
             });
@@ -31,7 +29,7 @@
             $("#precio").text(precio * $("#unidades").val());
         }
     </script>
-} 
+}
 <div class="container mt-5 pt-5">
     <section class="my-5">
 
@@ -44,10 +42,10 @@
 
                 <!-- Featured image -->
                 <div class=" mb-lg-0 mb-4">
-                    <img class="view overlay rounded z-depth-2 img-fluid img-" src="~/images/Productos/@Model.producto.Imagen" alt="Sample image">
+                    <img class="view overlay rounded z-depth-2 img-fluid" src="~/images/Productos/@Model.producto.Imagen" alt="Sample image">
                     @*<a>
-                    <div class="mask rgba-white-slight"></div>
-                </a>*@
+                            <div class="mask rgba-white-slight"></div>
+                        </a>*@
                 </div>
 
             </div>
@@ -62,7 +60,7 @@
                     @Html.AntiForgeryToken()
                     <input type="hidden" id="id_producto" name="id_producto" class="text-hide" value="@Model.producto.Id_Producto">
                     <h6 class="grey-text">Tallas: </h6>
-                    <select class='browser-default  custom-select-sm' id="id_tallas" name="id_talla" >
+                    <select class='browser-default  custom-select-sm' id="id_tallas" name="id_talla">
                         @foreach (Talla t in @Model.tallas)
                         {
                             @if (t.Stock != 0)
@@ -91,6 +89,7 @@
                     <br />
                     <!-- Read more button -->
                     <button type="submit" class="btn btn-primary">Comprar</button>
+                    <span class="alert-danger">@ViewBag.Mensaje</span>
                     <hr />
                     <h6 class="grey-text">Detalles: </h6>
                     <p>
@@ -109,10 +108,10 @@
                 </p>
             </div>
         </div>
-            <!-- Grid row -->
+        <!-- Grid row -->
 
 
 
-</section>
+    </section>
     <!-- Section: Blog v.1 -->
 </div>

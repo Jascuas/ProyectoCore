@@ -2,7 +2,7 @@
 @using Oberon.Extensions;
 @using Oberon.Models;
 @{
-    Carro carro = HttpContextAccessor.HttpContext.Session.GetObject<Carro>("carro");
+    List<Carro> carro = HttpContextAccessor.HttpContext.Session.GetObject<List<Carro>>("carro");
 }
 <div class="modal fade" id="modalCart" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -29,13 +29,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (ProductoCarro p in carro.Productos)
+                            
+                            @foreach (Carro c in carro)
                             {
                                 <tr>
-                                    <td>@p.Producto.producto.Nombre</td>
-                                    <td>@p.Talla.Size</td>
-                                    <td>@p.unidades</td>
-                                    <td>@p.Producto.producto.Precio</td>
+                                    <td>@c.Producto.Nombre</td>
+                                    <td>@c.Talla.Size</td>
+                                    <td>@c.unidades</td>
+                                    <td>@(@c.Producto.Precio * @c.unidades)€</td>
                                 </tr>
                             }
 
@@ -46,11 +47,13 @@
                 {
                     <h4 class="modal-title text-warning" id="myModalLabel">Aun no has añadido productos a tu carro</h4>
                 }
-                </div>
+
+            </div>
+            
             <!--Footer-->
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-danger " data-dismiss="modal">Cerrar</button>
-                <button class="btn btn-primary">Ver carrito completo</button>
+                <a class="btn btn-primary" asp-action="Carrito" asp-controller="Home">Ver carrito completo</a>
             </div>
         </div>
     </div>

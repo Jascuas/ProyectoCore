@@ -9,11 +9,15 @@ namespace Oberon.Models
 {
     public class Carro
     {
-        public Carro(List<ProductoCarro> productos)
+        public Carro(Producto producto,Talla talla, int unidades)
         {
-            this.Productos = productos;
+            this.Producto = producto;
+            this.Talla = talla;
+            this.unidades = unidades;
         }
-        public List<ProductoCarro> Productos { get; set; }
+        public Talla Talla { get; set; }
+        public Producto Producto { get; set; }
+        public int unidades { get; set; }
         
     }
 }

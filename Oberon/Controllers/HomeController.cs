@@ -45,10 +45,7 @@ namespace Oberon.Controllers
             ViewBag.Tipos = categorias.Distinct().ToList();
             return View(productos);
         }
-        public IActionResult Carrito()
-        {
-            return View();
-        }
+        
         public IActionResult Producto(int id_producto)
         {
             Producto producto = repo.GetProducto(id_producto);
@@ -67,29 +64,54 @@ namespace Oberon.Controllers
             ViewBag.Tallas = tallas;
             ProductoTalla pro = new ProductoTalla(producto, tallas);
 
-            Carro carro = HttpContext.Session.GetObject<Carro>("carro");
 
 
+            List<Carro> carro = HttpContext.Session.GetObject<List<Carro>>("carro");
             Talla talla = repo.GetTalla(id_talla);
-            ProductoCarro productoCarro = new ProductoCarro(pro, talla, unidades);
-            
-            if (carro != null)
+
+            Carro productoCarro = new Carro(producto, talla, unidades);
+            if (carro != null )
             {
-                carro.Productos.Add(productoCarro);
-                HttpContext.Session.SetObject<Carro>("carro", carro);
-                HttpContext.Session.SetInt32("carritoCount", carro.Productos.Count());
+                if(carro.Exists(prod => prod.Talla.Id_Producto == id_producto && prod.Talla.Size == productoCarro.Talla.Size))
+                {
+                    foreach(Carro c in carro)
+                    {
+                        if (c.Talla.Id_Producto == id_producto && c.Talla.Size == productoCarro.Talla.Size)
+                        {
+                            int unidadesT = c.unidades + productoCarro.unidades;
+                            if (c.Talla.Stock >= unidadesT)
+                            {
+                                c.unidades = unidadesT;
+                                HttpContext.Session.SetObject<List<Carro>>("carro", carro);
+                            }
+                            else
+                            {
+                                ViewBag.Mensaje = "No puedes comprar mas de " + c.Talla.Stock + " de esta talla."; 
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    carro.Add(productoCarro);
+                    HttpContext.Session.SetObject<List<Carro>>("carro", carro);
+                    HttpContext.Session.SetInt32("carritoCount", carro.Count());
+                }
             }
             else
             {
-                List<ProductoCarro> productos = new List<ProductoCarro>();
-                productos.Add(productoCarro);
-                Carro carronuevo = new Carro(productos);
-                HttpContext.Session.SetObject<Carro>("carro", carronuevo);
-                HttpContext.Session.SetInt32("carritoCount", 1);
+                List<Carro> carronuevo = new List<Carro>();
+                carronuevo.Add(productoCarro);
+                HttpContext.Session.SetObject<List<Carro>>("carro", carronuevo);
+                HttpContext.Session.SetInt32("carritoCount", carronuevo.Count());
             }
-            
+
             return View(pro);
         }
-       
+        public IActionResult Carrito()
+        {
+            List<Carro> carro = HttpContext.Session.GetObject<List<Carro>>("carro");
+            return View(carro);
+        }
     }
 }
