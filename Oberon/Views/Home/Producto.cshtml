@@ -1,5 +1,4 @@
-﻿@using Oberon.Models;
-@model Oberon.Models.ProductoTalla
+﻿@model Oberon.Models.ProductoTalla
 @section scripts{
     <script>
         var tallas =  @Json.Serialize(@ViewBag.Tallas);
@@ -12,7 +11,7 @@
             });
 
             $("#unidades").change(function () {
-                $("#precio").text(precio * $("#unidades").val());
+                $("#precio").text((precio * $("#unidades").val()).toFixed(2));
             });
         });
 
@@ -26,7 +25,7 @@
                 }
             });
             $("#unidades").html(html);
-            $("#precio").text(precio * $("#unidades").val());
+            $("#precio").text((precio * $("#unidades").val()).toFixed(2));
         }
     </script>
 }
@@ -88,7 +87,15 @@
                     <h5 class="text-primary"><span id="precio">@Model.producto.Precio</span>€</h5>
                     <br />
                     <!-- Read more button -->
-                    <button type="submit" class="btn btn-primary">Comprar</button>
+                    @if (Context.User.Identity.IsAuthenticated != false)
+                    {
+                        <button type="submit" class="btn btn-primary">Comprar</button>
+                    }
+                    else
+                    {
+                        <a class="btn btn-primary">Comprar</a>
+                    }
+
                     <span class="alert-danger">@ViewBag.Mensaje</span>
                     <hr />
                     <h6 class="grey-text">Detalles: </h6>

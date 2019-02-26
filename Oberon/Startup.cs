@@ -35,9 +35,9 @@ namespace Oberon
 
             services.AddTransient<IRepositoryOberon, RepositoryOberon>();
             services.AddDbContext<IOberonContext, OberonContext>(options => options.UseSqlServer(cadenadeconexionazure));
-            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            //services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddDistributedMemoryCache();
-
+            services.AddHttpContextAccessor();
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromHours(30);

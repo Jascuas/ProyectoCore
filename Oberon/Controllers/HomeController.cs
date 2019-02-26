@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Oberon.Models;
 using Oberon.Repositories;
 using Oberon.Extensions;
+using Microsoft.AspNetCore.Mvc.Filters;
 namespace Oberon.Controllers
 {
     public class HomeController : Controller
@@ -34,15 +35,20 @@ namespace Oberon.Controllers
 
 
 
-        public IActionResult Tienda()
+        public IActionResult Tienda(String tipo)
         {
             List<Producto> productos = repo.GetProductos();
             List<String> categorias = new List<String>();
             foreach(Producto p in productos)
             {
-                categorias.Add(p.Tipo + "s");
+                categorias.Add(p.Tipo);
             }
             ViewBag.Tipos = categorias.Distinct().ToList();
+            if (tipo != null)
+            {
+                productos = repo.GetProductos(tipo);
+                ViewBag.Tipo = tipo;
+            }
             return View(productos);
         }
         
@@ -63,9 +69,7 @@ namespace Oberon.Controllers
             List<Talla> tallas = repo.GetTallasProducto(id_producto);
             ViewBag.Tallas = tallas;
             ProductoTalla pro = new ProductoTalla(producto, tallas);
-
-
-
+            
             List<Carro> carro = HttpContext.Session.GetObject<List<Carro>>("carro");
             Talla talla = repo.GetTalla(id_talla);
 
@@ -108,10 +112,25 @@ namespace Oberon.Controllers
 
             return View(pro);
         }
-        public IActionResult Carrito()
+        public IActionResult Carrito(int? id_talla)
         {
             List<Carro> carro = HttpContext.Session.GetObject<List<Carro>>("carro");
+            if (id_talla != null)
+            {
+                Carro c = carro.Find(x => x.Talla.Id_Talla == id_talla);
+                carro.Remove(c);
+                HttpContext.Session.SetObject<List<Carro>>("carro", carro);
+            }
+           
             return View(carro);
         }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult Carrito(int id_talla, int unidades)
+        //{
+        //    List<Carro> carro = HttpContext.Session.GetObject<List<Carro>>("carro");
+        //    Carro c = carro.Find(x => x.Talla.Id_Talla == id_talla);
+        //    return View(carro);
+        //}
     }
 }

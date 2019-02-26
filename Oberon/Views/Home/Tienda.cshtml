@@ -3,7 +3,22 @@
     ViewBag.Title = "Tienda";
     List<String> tipos = ViewBag.Tipos;
 }
-
+@section scripts{ 
+<script>
+        $(document).ready(function () {
+            var tipo =  @Json.Serialize(@ViewBag.Tipo);
+            if (tipo != null) {
+                $("#tipos li").each(function (index, element) {
+                    $(element).removeClass("active");
+                    if (element.dataset.tipo == tipo) {
+                        $(element).addClass("active");
+                    }
+                });
+                $("#tipos li")
+        }
+        });
+</script>
+}
 <div class="container">
 
     <!--Navbar-->
@@ -22,22 +37,16 @@
         <div class="collapse navbar-collapse" id="basicExampleNav">
 
             <!-- Links -->
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">
-                        Todas
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
+            <ul class="navbar-nav mr-auto" id="tipos">
                 @if (tipos.Count > 0)
                 {
+                    <li class="nav-item active" data-tipo="Todo">
+                        <a asp-action="Tienda" asp-controller="Home" class="nav-link" >Todo</a>
+                    </li>
                     @foreach (String t in tipos)
                     {
-                        <li class="nav-item ">
-                            <a class="nav-link" href="#">
-                               @t
-
-                            </a>
+                        <li class="nav-item" data-tipo="@t">
+                            <a asp-action="Tienda" asp-controller="Home" asp-route-tipo="@t" class="nav-link">@t.ToString()s</a>
                         </li>
                     }
                 }
