@@ -39,7 +39,7 @@ namespace Oberon.Controllers
                     {
                         IsPersistent = true
                     ,
-                        ExpiresUtc = DateTime.Now.AddMinutes(30)
+                        ExpiresUtc = DateTime.Now.AddDays(30)
                     });
                 return RedirectToAction("Index", "Home");
             }

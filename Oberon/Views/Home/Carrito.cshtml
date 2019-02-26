@@ -1,75 +1,76 @@
 ﻿
 @model IEnumerable<Oberon.Models.Carro>
-<div class="container mt-5">
+<div class="container my-5">
     <div class="card shopping-cart">
         <div class="card-header bg-dark text-light">
             <i class="fa fa-shopping-cart mt-2 pt-1" aria-hidden="true">  </i>
-            Tu carrito de la compra
-            <a href="" class="btn btn-outline-info btn-sm float-right ">Seguir comprando</a>
-            <div class="clearfix"></div>
+            Tu carrito
+
         </div>
-        <div class="card-body">
+        <div class="card-body ">
+
             @if (Model != null)
             {
-                @foreach (Carro c in Model)
-                {
-                    <!-- PRODUCT -->
-                    <div class="row">
-                        <div class="col-12 col-sm-12 col-md-2 text-center">
-                            Imagen
-                        </div>
-                        <div class="col-12 text-sm-center col-sm-12 text-md-left col-md-6">
-                            <h4 class="product-name"><strong>Producto</strong></h4>
-                            <h4>
-                                <small>Product description</small>
-                            </h4>
-                        </div>
-                        <div class="col-12 col-sm-12 text-sm-center col-md-4 text-md-right row">
-                            <div class="col-3 col-sm-3 col-md-6 text-md-right" style="padding-top: 5px">
-                                <h6><strong>25.00 <span class="text-muted">x</span></strong></h6>
-                            </div>
-                            <div class="col-4 col-sm-4 col-md-4">
-                                <div class="quantity">
-                                    <input type="button" value="+" class="plus">
-                                    <input type="number" step="1" max="99" min="1" value="1" title="Qty" class="qty"
-                                           size="4">
-                                    <input type="button" value="-" class="minus">
-                                </div>
-                            </div>
-                            <div class="col-2 col-sm-2 col-md-2 text-right">
-                                <button type="button" class="btn btn-outline-danger btn-xs">
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
-                    <!-- END PRODUCT -->
+            <div class=" table-responsive-sm table-responsive-md">
+                <table class="table table-hover ">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Producto</th>
+                            <th>Talla</th>
+                            <th>Unidades</th>
+                            <th>Precio</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-                }}
+                        @foreach (Carro c in Model)
+                        {
+                            <tr>
+                                <td class="align-middle"><a class="thumbnail pull-left" href="#"> <img class="view overlay rounded z-depth-2 img-fluid mr-3" src="~/images/Productos/@c.Producto.Imagen" style="max-width: 150px"> </a></td>
+                                <td class="align-middle">@c.Producto.Nombre</td>
+                                <td class="align-middle">@c.Talla.Size</td>
+                                <td class="align-middle">
+                                    <div class="def-number-input number-input m-0">
+                                        <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
+                                        <input class="quantity" min="1" name="quantity" value="@c.unidades" type="number">
+                                        <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
+                                    </div>
+                                </td>
+                                <td class="align-middle">@(@c.Producto.Precio * @c.unidades)€</td>
+                                <td class="align-middle"><a><i class="fa fa-trash text-danger" aria-hidden="true"></i></a></td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+            }
             else
             {
-                                <h4 class="modal-title text-warning" id="myModalLabel">Aun no has añadido productos a tu carro</h4>
-                            }
+                <h4 class="modal-title text-warning" id="myModalLabel">Aun no has añadido productos a tu carro</h4>
+            }
             </div>
+           
 
-        <div class="card-footer">
-            <div class="coupon col-md-5 col-sm-5 no-padding-left pull-left">
-                <div class="row">
-                    <div class="col-6">
-                        <input type="text" class="form-control" placeholder="cupone code">
-                    </div>
-                    <div class="col-6">
-                        <input type="submit" class="btn btn-default" value="Use cupone">
+            <div class="card-footer">
+                <div class="coupon col-md-5 col-sm-5 no-padding-left pull-left">
+                    <div class="row">
+                        <div class="col-6">
+                            <input type="text" class="form-control" placeholder="cupone code">
+                        </div>
+                        <div class="col-6">
+                            <input type="submit" class="btn btn-default" value="Use cupone">
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="pull-right" style="margin: 10px">
-                <a href="" class="btn btn-success pull-right">Checkout</a>
-                <div class="pull-right" style="margin: 5px">
-                    Total price: <b>50.00€</b>
+                <div class="pull-right" style="margin: 10px">
+                    <a href="" class="btn btn-success pull-right">Checkout</a>
+                    <div class="pull-right" style="margin: 5px">
+                        Total price: <b>50.00€</b>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 </div>
