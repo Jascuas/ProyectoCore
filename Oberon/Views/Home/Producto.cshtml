@@ -89,11 +89,13 @@
                     <!-- Read more button -->
                     @if (Context.User.Identity.IsAuthenticated != false)
                     {
-                        <button type="submit" class="btn btn-primary">Comprar</button>
+                        <button type="submit" class="btn btn-outline-primary btn-sm ">Añadir al carro</button>
+
                     }
                     else
                     {
-                        <a class="btn btn-primary">Comprar</a>
+                        <a class="btn btn-outline-primary btn-sm disabled">Añadir al carro</a>
+                        <span class="text-warning">Tienes que estar registrado</span>
                     }
 
                     <span class="alert-danger">@ViewBag.Mensaje</span>
