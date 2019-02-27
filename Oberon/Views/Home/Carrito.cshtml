@@ -1,5 +1,14 @@
 ﻿
 @model IEnumerable<Oberon.Models.Carro>
+@section scripts{
+    <script>
+        function cambiarPrecio(input) {
+            var precio = $(input.parentNode.parentNode).siblings()[3];
+            
+            $(precio).text((precio.dataset.value * $(input).val()).toFixed(2) +"€");
+        }
+    </script>
+}
 <div class="container my-5">
     <div class="card shopping-cart">
         <div class="card-header bg-dark text-light">
@@ -10,7 +19,8 @@
         <div class="card-body ">
 
             @if (Model != null)
-            {
+            {@using (Html.BeginForm())
+                {
             <div class=" table-responsive-sm table-responsive-md">
                 <table class="table table-hover ">
                     <thead>
@@ -25,52 +35,62 @@
                     </thead>
                     <tbody>
 
+                        @Html.AntiForgeryToken()
                         @foreach (Carro c in Model)
                         {
+
                             <tr>
                                 <td class="align-middle"><a class="thumbnail pull-left" href="#"> <img class="view overlay rounded z-depth-2 img-fluid mr-3" src="~/images/Productos/@c.Producto.Imagen" style="max-width: 150px"> </a></td>
-                                <td class="align-middle">@c.Producto.Nombre</td>
+                                <td class="align-middle">@c.Producto.Nombre<input type="hidden" id="id_talla" name="id_talla" class="text-hide" value="@c.Talla.Id_Talla"></td>
                                 <td class="align-middle">@c.Talla.Size</td>
                                 <td class="align-middle">
                                     <div class="def-number-input number-input m-0">
-                                        <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
-                                        <input class="quantity" min="1" name="quantity" value="@c.unidades" type="number">
-                                        <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
+                                        <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepDown(), cambiarPrecio(this.parentNode.querySelector('input[type=number]'))" class="minus"></button>
+                                        <input class="quantity" min="1" name="unidades" value="@c.unidades" type="number" oninput="cambiarPrecio(this)">
+                                        <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepUp(), cambiarPrecio(this.parentNode.querySelector('input[type=number]'))" class="plus"></button>
                                     </div>
                                 </td>
-                                <td class="align-middle">@(@c.Producto.Precio * @c.unidades)€</td>
+                                <td class="align-middle" id="@c.Talla.Id_Talla" data-value="@c.Producto.Precio">@(@c.Producto.Precio * @c.unidades)€</td>
                                 <td class="align-middle"><a><i class="fa fa-trash text-danger" aria-hidden="true"></i></a></td>
                             </tr>
                         }
 
+
                     </tbody>
                 </table>
-            </div>
-            }
-            else
-            {
-                <h4 class="modal-title text-warning" id="myModalLabel">Aun no has añadido productos a tu carro</h4>
-            }
-            </div>
-           
+                <button type="submit" class="btn btn-primary">Actualizar carrito</button>
 
-            <div class="card-footer">
-                <div class="coupon col-md-5 col-sm-5 no-padding-left pull-left">
-                    <div class="row">
-                        <div class="col-6">
-                            <input type="text" class="form-control" placeholder="cupone code">
-                        </div>
-                        <div class="col-6">
-                            <input type="submit" class="btn btn-default" value="Use cupone">
-                        </div>
+                <div class="float-right" style="margin: 5px">
+                    <h6 class="text-muted"> Codigo: <b><span id=""> FINOFILIPINO @ViewBag.Codigo</span></h6>
+                    <h6 class="text-muted"> Descuento del: <b><span id="">20</span> %</b></h6>
+                    <h6>Precio sin descuento: <b class="text-danger"><span>@ViewBag.Total</span> €</b> </h6>
+                    <h5>Precio total: <b class="text-info"><span id="total">@ViewBag.Total</span> €</b></h5>
+                </div>
+            </div>
+                }
+        }
+        else
+        {
+            <h4 class="modal-title text-warning" id="myModalLabel">Aun no has añadido productos a tu carro</h4>
+        }
+        </div>
+
+
+        <div class="card-footer">
+            <div class="coupon col-md-5 col-sm-5 ">
+                <div class="row">
+                    <div class="col-6">
+                        <input type="text" class="form-control" placeholder="cupone code">
+                    </div>
+                    <div class="col-6">
+                        <input type="submit" class="btn btn-default" value="Use cupone">
                     </div>
                 </div>
-                <div class="pull-right" style="margin: 10px">
-                    <a href="" class="btn btn-success pull-right">Checkout</a>
-                    <div class="pull-right" style="margin: 5px">
-                        Total price: <b>50.00€</b>
-                    </div>
-                </div>
+            </div>
+            <div class="pull-right" style="margin: 10px">
+                <a href="" class="btn btn-success">Checkout</a>
+                
             </div>
         </div>
+    </div>
 </div>

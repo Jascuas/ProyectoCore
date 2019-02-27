@@ -121,15 +121,47 @@ namespace Oberon.Controllers
                 carro.Remove(c);
                 HttpContext.Session.SetObject<List<Carro>>("carro", carro);
             }
-           
+            double total = 0;
+            foreach(Carro c in carro)
+            {
+                total += c.Producto.Precio * c.unidades;
+            }
+            ViewBag.Total = total;
+            return View(carro);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Carrito(List<int> id_talla, List<int> unidades)
+        {
+            List<Carro> carro = HttpContext.Session.GetObject<List<Carro>>("carro");
+            for(int i = 0; i < id_talla.Count(); i++)
+            {
+                Carro c = carro.Find(x => x.Talla.Id_Talla == id_talla[i]);
+                if(c != null)
+                {
+                    c.unidades = unidades[i];
+                }
+            }
+            HttpContext.Session.SetObject<List<Carro>>("carro", carro);
+            double total = 0;
+            foreach (Carro c in carro)
+            {
+                total += c.Producto.Precio * c.unidades;
+            }
+            ViewBag.Total = total;
             return View(carro);
         }
         //[HttpPost]
         //[ValidateAntiForgeryToken]
-        //public IActionResult Carrito(int id_talla, int unidades)
+        //public IActionResult Carrito(String cupon)
         //{
-        //    List<Carro> carro = HttpContext.Session.GetObject<List<Carro>>("carro");
-        //    Carro c = carro.Find(x => x.Talla.Id_Talla == id_talla);
+        //    List<Carro> carro = HttpContext.Session.GetObject<List<Carro>>("carro");    
+        //    double total = 0;
+        //    foreach (Carro c in carro)
+        //    {
+        //        total += c.Producto.Precio * c.unidades;
+        //    }
+        //    ViewBag.Total = total;
         //    return View(carro);
         //}
     }

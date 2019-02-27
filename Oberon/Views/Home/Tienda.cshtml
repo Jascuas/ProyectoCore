@@ -7,15 +7,15 @@
 <script>
         $(document).ready(function () {
             var tipo =  @Json.Serialize(@ViewBag.Tipo);
-            if (tipo != null) {
-                $("#tipos li").each(function (index, element) {
-                    $(element).removeClass("active");
-                    if (element.dataset.tipo == tipo) {
-                        $(element).addClass("active");
-                    }
-                });
-                $("#tipos li")
-        }
+            if (tipo == null) {
+                tipo = "Todo";
+            }
+            $("#tipos li").each(function (index, element) {
+                $(element).removeClass("active");
+                if (element.dataset.tipo == tipo) {
+                    $(element).addClass("active");
+                }
+            });
         });
 </script>
 }
@@ -40,7 +40,7 @@
             <ul class="navbar-nav mr-auto" id="tipos">
                 @if (tipos.Count > 0)
                 {
-                    <li class="nav-item active" data-tipo="Todo">
+                    <li class="nav-item " data-tipo="Todo">
                         <a asp-action="Tienda" asp-controller="Home" class="nav-link" >Todo</a>
                     </li>
                     @foreach (String t in tipos)
