@@ -64,6 +64,7 @@ namespace Oberon.Controllers
                 ClaimsIdentity identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
                 identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, usuario.Rol));
                 identity.AddClaim(new Claim(ClaimTypes.Name, usuario.User));
+                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, usuario.Id_Usuario.ToString()));
                 ClaimsPrincipal principal = new ClaimsPrincipal(identity);
                 await HttpContext.SignInAsync
                     (CookieAuthenticationDefaults.AuthenticationScheme, principal

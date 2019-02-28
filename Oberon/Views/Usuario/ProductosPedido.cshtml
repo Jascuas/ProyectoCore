@@ -1,0 +1,94 @@
+﻿@{
+    List<Carro> productos = ViewBag.Productos;
+    Pedido p = ViewBag.Pedido;
+}
+<div class="col-10 my-5">
+    <section class="mb-4">
+
+        <div class="row">
+
+            <!--Grid column-->
+            <div class="col-md-3 mb-md-0 mb-5">
+                <!-- Card Dark -->
+                <div class="card">
+                    <!-- Card content -->
+                    <div class="card-body elegant-color white-text rounded-bottom">
+
+                        <!-- Title -->
+                        <h4 class="card-title">@Model.User</h4>
+                        <hr class="hr-light">
+                        <!-- Text -->
+                        <p class="card-text white-text mb-4">Aqui podras comprobar tus pedidos y editar tu usuario</p>
+                        <!-- Link -->
+                        <ul>
+                            <li>
+                                <a asp-action="Pedidos" asp-controller="Usuario" class="text-white">Pedidos</a>
+                            </li>
+
+                            <li>
+                                <a asp-action="Pedidos" asp-controller="Usuario" class="text-white">Modificar informacion</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+                <!-- Card Dark -->
+            </div>
+            <!--Grid column-->
+            <!--Grid column-->
+            <div class="col-md-9 text-center">
+                <div class="card shopping-cart">
+                    @if (productos != null)
+                    {
+                        <div class="card-header bg-dark text-light">
+                            Productos del pedido realizado el dia @p.fecha_Pedido
+                        </div>
+                        <div class="card-body ">
+
+                            <div class=" table-responsive-sm table-responsive-md">
+                                <table class="table table-hover ">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Producto</th>
+                                            <th>Talla</th>
+                                            <th>Unidades</th>
+                                            <th>Precio</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (Carro c in productos)
+                                        {
+                                        <tr>
+                                            <td class="align-middle"><a asp-action="Tienda" asp-controller="Home" asp-route-id_Talla="@c.Talla.Id_Producto" class="thumbnail pull-left"> <img class=" rounded z-depth-2 img-fluid mr-3" src="~/images/Productos/@c.Producto.Imagen" style="max-width: 150px"> </a></td>
+                                            <td class="align-middle">@c.Producto.Nombre<input type="hidden" id="id_talla" name="id_talla" class="text-hide" value="@c.Talla.Id_Talla"></td>
+                                            <td class="align-middle">@c.Talla.Size</td>
+                                            <td class="align-middle">@c.unidades</td>
+                                            <td class="align-middle">@(@c.Producto.Precio * @c.unidades)€</td>
+                                            
+                                        </tr>
+                                        }
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="card-header bg-dark text-light">
+                            Productos del pedido
+                        </div>
+                        <h4 class="modal-title text-warning" id="myModalLabel">No has seleccionado ningun pedido</h4>
+                    }
+                </div>
+            </div>
+            <!--Grid column-->
+
+        </div>
+
+    </section>
+    <!--Section: Contact v.2-->
+</div>

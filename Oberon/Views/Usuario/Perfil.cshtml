@@ -4,67 +4,49 @@
     ViewData["Title"] = "Perfil";
 }
 
-<h2>Perfil</h2>
-@if (Model != null)
-{
+<div class="col-10 my-5">
+    <section class="mb-4">
 
-<div>
-    <h4>Usuario</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Id_Usuario)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Id_Usuario)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Password)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.User)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.User)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Nombre)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Apellidos)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Apellidos)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Rol)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Rol)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Fecha)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Fecha)
-        </dd>
-    </dl>
+        <div class="row">
+
+            <!--Grid column-->
+            <div class="col-md-3 mb-md-0 mb-5">
+                <!-- Card Dark -->
+                <div class="card">
+                    <!-- Card content -->
+                    <div class="card-body elegant-color white-text rounded-bottom">
+
+                        <!-- Title -->
+                        <h4 class="card-title">@Model.User</h4>
+                        <hr class="hr-light">
+                        <!-- Text -->
+                        <p class="card-text white-text mb-4">Aqui podras comprobar tus pedidos y editar tu usuario</p>
+                        <!-- Link -->
+                        <ul>
+                            <li >
+                                <a asp-action="Pedidos" asp-controller="Usuario" class="text-white">Pedidos</a>
+                            </li>
+
+                            <li >
+                                <a asp-action="Pedidos" asp-controller="Usuario" class="text-white">Modificar informacion</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+                <!-- Card Dark -->
+            </div>
+            <!--Grid column-->
+            <!--Grid column-->
+            <div class="col-md-9 text-center">
+                
+            </div>
+            <!--Grid column-->
+
+        </div>
+
+    </section>
+    <!--Section: Contact v.2-->
 </div>
 
-}
-<div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
-</div>
+

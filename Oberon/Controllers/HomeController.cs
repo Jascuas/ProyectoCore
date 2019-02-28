@@ -10,6 +10,8 @@ using Oberon.Models;
 using Oberon.Repositories;
 using Oberon.Extensions;
 using Microsoft.AspNetCore.Mvc.Filters;
+using System.Security.Claims;
+
 namespace Oberon.Controllers
 {
     public class HomeController : Controller
@@ -120,12 +122,17 @@ namespace Oberon.Controllers
                 HttpContext.Session.SetObject<List<Carro>>("carro", carro);
                 HttpContext.Session.SetInt32("carritoCount", carro.Count());
             }
-            double total = 0;
-            foreach(Carro c in carro)
+            if(carro != null)
             {
-                total += c.Producto.Precio * c.unidades;
+                double total = 0;
+                foreach (Carro c in carro)
+                {
+                    total += c.Producto.Precio * c.unidades;
+                }
+                ViewBag.Total = total;
             }
-            ViewBag.Total = total;
+            ViewBag.Mensaje = HttpContext.Session.GetString("pedido");
+            HttpContext.Session.Remove("pedido");
             return View(carro);
         }
         [HttpPost]
@@ -150,18 +157,32 @@ namespace Oberon.Controllers
             ViewBag.Total = total;
             return View(carro);
         }
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult Carrito(String cupon)
-        //{
-        //    List<Carro> carro = HttpContext.Session.GetObject<List<Carro>>("carro");    
-        //    double total = 0;
-        //    foreach (Carro c in carro)
-        //    {
-        //        total += c.Producto.Precio * c.unidades;
-        //    }
-        //    ViewBag.Total = total;
-        //    return View(carro);
-        //}
+        public IActionResult AñadirPedido()
+        {
+            List<Carro> carro = HttpContext.Session.GetObject<List<Carro>>("carro");
+            Usuario user = repo.ExisteUsuario(int.Parse(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value));
+            if (carro != null)
+            {
+                double precioTotal = 0;
+                List<ProductoPedido> productos= new List<ProductoPedido>();
+                foreach (Carro c in carro)
+                {
+                    ProductoPedido p = new ProductoPedido(c.Talla.Id_Talla, c.unidades);
+                    productos.Add(p);
+                    precioTotal += Math.Round(c.Producto.Precio * c.unidades, 2);
+                }
+                Pedido pe = repo.RegistrarPedido(user.Id_Usuario, precioTotal);
+                foreach (ProductoPedido pro in productos)
+                {
+                    pro.id_Pedido = pe.id_pedido;
+                    repo.RegistrarProductoPedido(pro);
+                }
+            }
+            HttpContext.Session.Remove("carro");
+            HttpContext.Session.Remove("carritoCount");
+            HttpContext.Session.SetString("pedido", "Hemos actualizado tus pedidos! Gracias por confiar en nosotros <3");
+            
+            return RedirectToAction("Carrito", "Home");
+        }
     }
 }

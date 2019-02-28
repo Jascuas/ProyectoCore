@@ -1,0 +1,83 @@
+﻿@{
+    List<Pedido> pedidos = ViewBag.Pedidos;
+}
+<div class="col-10 my-5">
+    <section class="mb-4">
+
+        <div class="row">
+
+            <!--Grid column-->
+            <div class="col-md-3 mb-md-0 mb-5">
+                <!-- Card Dark -->
+                <div class="card">
+                    <!-- Card content -->
+                    <div class="card-body elegant-color white-text rounded-bottom">
+
+                        <!-- Title -->
+                        <h4 class="card-title">@Model.User</h4>
+                        <hr class="hr-light">
+                        <!-- Text -->
+                        <p class="card-text white-text mb-4">Aqui podras comprobar tus pedidos y editar tu usuario</p>
+                        <!-- Link -->
+                        <ul>
+                            <li>
+                                <a asp-action="Pedidos" asp-controller="Usuario" class="text-white">Pedidos</a>
+                            </li>
+
+                            <li>
+                                <a asp-action="Pedidos" asp-controller="Usuario" class="text-white">Modificar informacion</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+                <!-- Card Dark -->
+            </div>
+            <!--Grid column-->
+            <!--Grid column-->
+            <div class="col-md-9 text-center">
+                <div class="card shopping-cart">
+                    <div class="card-header bg-dark text-light">
+                        Tus pedidos
+                    </div>
+                    <div class="card-body ">
+
+                        @if (pedidos != null && pedidos.Count > 0)
+                        {<div class=" table-responsive-sm table-responsive-md">
+                                <table class="table table-hover ">
+                                    <thead>
+                                        <tr>
+                                            <th>Pedido</th>
+                                            <th>Fecha pedido</th>
+                                            <th>Precio total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (Pedido p in pedidos)
+                                        {
+                                        <tr>
+                                            <td class="align-middle "><a asp-action="ProductosPedido" asp-controller="Usuario" asp-route-id_pedido="@p.id_pedido" class="text-info">Ver detalles del pedido</a></td>
+                                            <td class="align-middle">@p.fecha_Pedido</td>
+                                            <td class="align-middle text-primary h6">@p.total €</td>
+                                        </tr>
+                                        }
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        else
+                        {
+                            <h4 class="modal-title text-warning" id="myModalLabel">Aun no has realizado ningun pedido</h4>
+                        }
+                    </div>
+                </div>
+            </div>
+            <!--Grid column-->
+
+        </div>
+
+    </section>
+    <!--Section: Contact v.2-->
+</div>

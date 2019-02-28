@@ -65,5 +65,50 @@ namespace Oberon.Repositories
             var consulta = from datos in context.Talla select datos;
             return consulta.ToList();
         }
+
+        public Usuario ExisteUsuario(int id_usuario)
+        {
+            var consulta = from datos in context.Usuario where datos.Id_Usuario == id_usuario select datos;
+            return consulta.FirstOrDefault();
+        }
+
+        public Pedido GetPedido(int id_pedido)
+        {
+            var consulta = from datos in context.Pedidos where datos.id_pedido == id_pedido select datos;
+            return consulta.FirstOrDefault();
+        }
+
+        public List<Pedido> GetPedidos(int id_usurio)
+        {
+            var consulta = from datos in context.Pedidos where datos.id_Usuario == id_usurio select datos;
+            return consulta.ToList();
+        }
+
+        public ProductoPedido GetProductoPedido(int id_producto)
+        {
+            var consulta = from datos in context.ProductosPedido where datos.id_Producto_Pedido == id_producto select datos;
+            return consulta.FirstOrDefault();
+        }
+
+        public List<ProductoPedido> GetProductosPedido(int id_pedido)
+        {
+            var consulta = from datos in context.ProductosPedido where datos.id_Pedido == id_pedido select datos;
+            return consulta.ToList();
+        }
+
+        public Pedido RegistrarPedido(int id_Usuario, double total)
+        {
+            DateTime fecha = DateTime.Now;
+            Pedido p = new Pedido(id_Usuario, fecha, total);
+            this.context.Pedidos.Add(p);
+            this.context.SaveChanges();
+            return p;
+        }
+
+        public void RegistrarProductoPedido(ProductoPedido pro)
+        {
+            this.context.ProductosPedido.Add(pro);
+            this.context.SaveChanges();
+        }
     }
 }
