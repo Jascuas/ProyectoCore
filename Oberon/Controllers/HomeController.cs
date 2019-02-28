@@ -33,8 +33,6 @@ namespace Oberon.Controllers
         }
 
 
-
-
         public IActionResult Tienda(String tipo)
         {
             List<Producto> productos = repo.GetProductos();
@@ -120,6 +118,7 @@ namespace Oberon.Controllers
                 Carro c = carro.Find(x => x.Talla.Id_Talla == id_talla);
                 carro.Remove(c);
                 HttpContext.Session.SetObject<List<Carro>>("carro", carro);
+                HttpContext.Session.SetInt32("carritoCount", carro.Count());
             }
             double total = 0;
             foreach(Carro c in carro)
