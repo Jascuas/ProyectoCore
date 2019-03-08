@@ -11,6 +11,7 @@ using Oberon.Repositories;
 using Oberon.Extensions;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Security.Claims;
+using Newtonsoft.Json;
 
 namespace Oberon.Controllers
 {
@@ -184,5 +185,8 @@ namespace Oberon.Controllers
             
             return RedirectToAction("Carrito", "Home");
         }
+
+
+        //AJAX PAGINATION
     }
 }

@@ -18,23 +18,32 @@
             console.log(url);
             fetch(url)
                 .then(res => res.json())//response type
-                .then(data => cargarDatos(data)) //log the data;
+                .then(data => cargarDatos(data))//log the data;
                 .catch(function (error) {
                     console.log(error)
                 });
         }
         function cargarDatos(data) {
+            $("#tabla").empty();
             var table = $('<table>');
             table.addClass("table table-striped");
             var thead = $('<thead>').append($('<th>').text("IdEmpleado"), $('<th>').text("Apellido"), $('<th>').text("Oficio"), $('<th>').text("Salario"), $('<tr>'));
             table.append(thead);
             var tbody = $('<tbody>');
-            $.each(data, function (i, item) {
-                tbody.append($('<td>').append($('<a>').addClass("link text-info").click(function () { llamarAPI("empleados/" + item.IdEmpleado); }).text(item.IdEmpleado)),
-                    $('<td>').text(item.Apellido),
-                    $('<td>').append($('<a>').addClass("link").click(function () { llamarAPI("EmpleadosOficio/" + item.Oficio); }).text(item.Oficio)),
-                    $('<td>').text(item.Salario), $('<tr>'));
-            })
+            if ($(data).length > 1) {
+                $.each(data, function (i, item) {
+                    tbody.append($('<td>').append($('<a>').addClass("link text-info").click(function () { llamarAPI("empleados/" + item.IdEmpleado); }).text(item.IdEmpleado)),
+                        $('<td>').text(item.Apellido),
+                        $('<td>').append($('<a>').addClass("link").click(function () { llamarAPI("EmpleadosOficio/" + item.Oficio); }).text(item.Oficio)),
+                        $('<td>').append($('<a>').addClass("link").click(function () { llamarAPI("EmpleadosSalario/" + item.Salario); }).text(item.Salario)), $('<tr>'));
+
+                })
+            } else {
+                tbody.append($('<td>').append($('<a>').addClass("link text-info").click(function () { llamarAPI("empleados/" + data.IdEmpleado); }).text(data.IdEmpleado)),
+                    $('<td>').text(data.Apellido),
+                    $('<td>').append($('<a>').addClass("link").click(function () { llamarAPI("EmpleadosOficio/" + data.Oficio); }).text(data.Oficio)),
+                    $('<td>').append($('<a>').addClass("link").click(function () { llamarAPI("EmpleadosSalario/" + data.Salario); }).text(data.Salario)), $('<tr>'));
+            }
             table.append(tbody);
             $("#tabla").append(table);
         }
