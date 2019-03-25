@@ -31,11 +31,11 @@ namespace Oberon
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            String cadenadeconexionazure = this.configuration.GetConnectionString("cadenaoberonazure");
 
-            services.AddTransient<IRepositoryOberon, RepositoryOberon>();
-            services.AddDbContext<IOberonContext, OberonContext>(options => options.UseSqlServer(cadenadeconexionazure));
-            //services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient<IRepositoryAPIPedidos, RepositoryAPIPedidos>();
+            services.AddTransient<IRepositoryAPIProductos, RepositoryAPIProductos>();
+            services.AddTransient<IRepositoryAPIProductosPedido, RepositoryAPIProductosPedido>();
+            services.AddTransient<IRepositoryAPIUsuarios, RepositoryAPIUsuarios>();
             services.AddDistributedMemoryCache();
             services.AddHttpContextAccessor();
             services.AddSession(options =>
