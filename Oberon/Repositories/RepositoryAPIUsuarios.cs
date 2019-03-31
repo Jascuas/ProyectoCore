@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Oberon.Models;
@@ -14,27 +15,25 @@ namespace Oberon.Repositories
     {
         private String uriapi;
         private MediaTypeWithQualityHeaderValue headerjson;
-
         public RepositoryAPIUsuarios()
         {
             this.uriapi = "https://apioberon.azurewebsites.net/";
             this.headerjson = new MediaTypeWithQualityHeaderValue("application/json");
         }
-
         public async Task<String> GetToken(LoginCredentials credentials)
         {
             using (HttpClient client = new HttpClient())
             {
-                String peticion = "login";
+                String peticion = "recuperartoken";
                 client.BaseAddress = new Uri(this.uriapi);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(headerjson);
                 FormUrlEncodedContent content =
                     new FormUrlEncodedContent(new[]
                     {
-                        new KeyValuePair<string, string>("grant_type", "password"),
-                        new KeyValuePair<string, string>("username", credentials.Identifier),
-                        new KeyValuePair<string, string>("password", credentials.Password)
+                        new KeyValuePair<String, String>("grant_type", "password"),
+                        new KeyValuePair<String, String>("username", credentials.Identifier),
+                        new KeyValuePair<String, String>("password", credentials.Password)
                     });
                 HttpResponseMessage response = await
                 client.PostAsync(peticion, content);
@@ -53,7 +52,6 @@ namespace Oberon.Repositories
 
             }
         }
-
         private async Task<T> CallApi<T>(String peticion, String token)
         {
             using (HttpClient cliente = new HttpClient())
@@ -77,48 +75,49 @@ namespace Oberon.Repositories
                 }
             }
         }
-        public async Task<Object> ExisteUsuario(LoginCredentials credentials)
+        public async Task<Usuario> GetUsuario(String token)
         {
-            throw new NotImplementedException();
+            Usuario usuario = await this.CallApi<Usuario>("api/Usuarios/" , token);
+            return usuario;
         }
-
-        public async Task<Usuario> ExisteUsuario(int id_usuario)
+        public async Task<String> RegistrarUsuario(RegisterCredentials credentials)
         {
-            throw new NotImplementedException();
+            using (HttpClient cliente = new HttpClient())
+            {
+                cliente.BaseAddress = new Uri(this.uriapi);
+                cliente.DefaultRequestHeaders.Accept.Clear();
+                cliente.DefaultRequestHeaders.Accept.Add(headerjson);
+                
+                HttpResponseMessage response = await cliente.PostAsJsonAsync("api/Usuarios/", credentials);
+                if (response.IsSuccessStatusCode)
+                {
+                    return await response.Content.ReadAsAsync<String>();
+                }
+                else
+                {
+                    return "No hemos podido registrarle, pruebe otra vez";
+                }
+            }
         }
-        public async Task<Usuario> LoginUsuario(LoginCredentials credentials)
+        public async Task<Pedido> GetPedido(int id_usuario, int id_pedido, String token)
         {
-            throw new NotImplementedException();
+            Pedido pedido = await this.CallApi<Pedido>("api/Usuarios/"+id_usuario+"/Pedidos/"+id_pedido, token);
+            return pedido;
         }
-
-        public async Task RegistrarUsuario(RegisterCredentials credentials)
+        public async Task<List<Pedido>> GetPedidos(int id_usuario, String token)
         {
-            throw new NotImplementedException();
+            List<Pedido> pedidos = await this.CallApi<List<Pedido>>("api/Usuarios/" + id_usuario + "/Pedidos/", token);
+            return pedidos;
         }
-
-        public async Task<List<Usuario>> Usuarios(string token)
+        public async Task<ProductoPedido> GetProductoPedido(int id_usuario, int id_pedido, int id_producto, String token)
         {
-            throw new NotImplementedException();
+            ProductoPedido producto = await this.CallApi<ProductoPedido>("api/Usuarios/" + id_usuario + "/Pedidos/"+id_pedido+ "/ProductosPedido/" + id_producto, token);
+            return producto;
         }
-
-        public async Task<Pedido> GetPedido(int id_pedido, string token)
+        public async Task<List<ProductoPedido>> GetProductosPedido(int id_usuario, int id_pedido, String token)
         {
-            throw new NotImplementedException();
-        }
-
-        public async Task<List<Pedido>> GetPedidos(int id_usurio, string token)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<ProductoPedido> GetProductoPedido(int id_producto, string token)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<List<ProductoPedido>> GetProductosPedido(int id_pedido, string token)
-        {
-            throw new NotImplementedException();
+            List<ProductoPedido> productos = await this.CallApi<List<ProductoPedido>>("api/Usuarios/" + id_usuario + "/Pedidos/" + id_pedido + "/ProductosPedido/", token);
+            return productos;
         }
 
 

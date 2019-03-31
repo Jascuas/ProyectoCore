@@ -14,8 +14,8 @@ namespace Oberon.Controllers
 {
     public class ValidacionController : Controller
     {
-        IRepositoryOberon repo;
-        public ValidacionController(IRepositoryOberon repo)
+        IRepositoryAPIUsuarios repo;
+        public ValidacionController(IRepositoryAPIUsuarios repo)
         {
             this.repo = repo;
         }
@@ -24,14 +24,17 @@ namespace Oberon.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult>Login(String email, String password)
+        public async Task<IActionResult>Login(LoginCredentials credentials)
         {
-            Usuario usuario = this.repo.ExisteUsuario(email, password);
-            if (usuario != null)
+            String token = await this.repo.GetToken(credentials);
+            
+            if (token != null)
             {
+                HttpContext.Session.SetString("token", token);
+                Usuario usuario = await this.repo.GetUsuario(token);
                 ClaimsIdentity identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
                 identity.AddClaim(new Claim(ClaimTypes.Role, usuario.Rol));
-                identity.AddClaim(new Claim(ClaimTypes.Name, usuario.User));
+                identity.AddClaim(new Claim(ClaimTypes.Name, usuario.Id_Usuario.ToString()));
                 identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, usuario.Id_Usuario.ToString()));
                 ClaimsPrincipal principal = new ClaimsPrincipal(identity);
                 await HttpContext.SignInAsync
@@ -55,33 +58,11 @@ namespace Oberon.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Registro(String password, String nombre, String apellidos, String email)
+        public async Task<IActionResult> Registro(RegisterCredentials credentials)
         {
-            this.repo.RegistrarUsuario(password, nombre, apellidos, email);
-            Usuario usuario = this.repo.ExisteUsuario(email, password);
-            if (usuario != null)
-            {
-                ClaimsIdentity identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
-                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, usuario.Rol));
-                identity.AddClaim(new Claim(ClaimTypes.Name, usuario.User));
-                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, usuario.Id_Usuario.ToString()));
-                ClaimsPrincipal principal = new ClaimsPrincipal(identity);
-                await HttpContext.SignInAsync
-                    (CookieAuthenticationDefaults.AuthenticationScheme, principal
-                    , new AuthenticationProperties
-                    {
-                        IsPersistent = true
-                    ,
-                        ExpiresUtc = DateTime.Now.AddMinutes(30)
-                    });
-                return RedirectToAction("Index", "Home");
-            }
-            else
-            {
-                ViewBag.Mensaje = "No hemos conseguido registrarle";
-                return View();
-            }
-            
+            String mesaje = await this.repo.RegistrarUsuario(credentials);
+            ViewBag.Mensaje = mesaje;
+            return View();
         }
         public async Task<IActionResult> Logout()
         {

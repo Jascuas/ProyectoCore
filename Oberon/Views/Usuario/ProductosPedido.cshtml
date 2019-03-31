@@ -1,7 +1,7 @@
-﻿@{
+﻿@*@{
     List<Carro> productos = ViewBag.Productos;
     Pedido p = ViewBag.Pedido;
-}
+}*@
 <div class="col-10 my-5">
     <section class="mb-4">
 
@@ -38,7 +38,7 @@
             <!--Grid column-->
             <div class="col-md-9 text-center">
                 <div class="card shopping-cart">
-                    @if (productos != null)
+                    @*@if (productos != null)
                     {
                         <div class="card-header bg-dark text-light">
                             Productos del pedido realizado el dia @p.fecha_Pedido
@@ -82,7 +82,7 @@
                             Productos del pedido
                         </div>
                         <h4 class="modal-title text-warning" id="myModalLabel">No has seleccionado ningun pedido</h4>
-                    }
+                    }*@
                 </div>
             </div>
             <!--Grid column-->

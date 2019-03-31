@@ -11,7 +11,7 @@ namespace Oberon.Repositories
         Task<Pedido> GetPedido(int id_pedido, String token);
         Task<List<Pedido>> GetPedidos(String token);
         Task<List<Pedido>> GetPedidos(int id_usurio, String token);
-        Task RegistrarPedido(Pedido pedido, String token);
+        Task<String> RegistrarPedido(Pedido pedido, String token);
     }
 
 

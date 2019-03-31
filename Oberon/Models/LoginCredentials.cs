@@ -16,5 +16,9 @@ namespace Oberon.Models
             Identifier = identifier;
             Password = password;
         }
+
+        public LoginCredentials()
+        {
+        }
     }
 }

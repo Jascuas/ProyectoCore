@@ -9,6 +9,10 @@ namespace Oberon.Models
 {
     public class RegisterCredentials
     {
+        public RegisterCredentials()
+        {
+        }
+
         public RegisterCredentials(string nombre, string apellidos, string email, string password, string passwordConfirm)
         {
             Nombre = nombre;
