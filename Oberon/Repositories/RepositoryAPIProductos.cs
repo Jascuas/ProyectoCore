@@ -61,7 +61,7 @@ namespace Oberon.Repositories
 
         public async Task<List<Producto>> GetProductos(string tipo)
         {
-            List<Producto> productos = await this.CallApi<List<Producto>>("api/Productos/"+tipo, null);
+            List<Producto> productos = await this.CallApi<List<Producto>>("api/Productos/?tipo="+tipo, null);
             return productos;
         }
     }

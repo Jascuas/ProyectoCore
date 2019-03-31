@@ -11,6 +11,8 @@ namespace Oberon.Models
     {
         public int Id_Producto { get; set; }
         public String Nombre { get; set; }
+        public String Tipo { get; set; }
+        public String Estado { get; set; }
         public double Precio { get; set; }
         public String Imagen { get; set; }
         public List<Talla> Tallas { get; set; }

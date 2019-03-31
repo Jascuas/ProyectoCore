@@ -17,11 +17,11 @@ namespace Oberon.Controllers
 {
     public class HomeController : Controller
     {
-        //IRepositoryOberon repo;
-        //public HomeController(IRepositoryOberon repo)
-        //{
-        //    this.repo = repo;
-        //}
+        IRepositoryAPIProductos repo;
+        public HomeController(IRepositoryAPIProductos repo)
+        {
+            this.repo = repo;
+        }
         public IActionResult Index()
         {
             return View();
@@ -36,23 +36,23 @@ namespace Oberon.Controllers
         }
 
 
-        //public IActionResult Tienda(String tipo)
-        //{
-        //    List<Producto> productos = repo.GetProductos();
-        //    List<String> categorias = new List<String>();
-        //    foreach(Producto p in productos)
-        //    {
-        //        categorias.Add(p.Tipo);
-        //    }
-        //    ViewBag.Tipos = categorias.Distinct().ToList();
-        //    if (tipo != null)
-        //    {
-        //        productos = repo.GetProductos(tipo);
-        //        ViewBag.Tipo = tipo;
-        //    }
-        //    return View(productos);
-        //}
-        
+        public async Task<IActionResult> Tienda(String tipo)
+        {
+            List<Producto> productos = await repo.GetProductos();
+            List<String> categorias = new List<String>();
+            foreach (Producto p in productos)
+            {
+                categorias.Add(p.Tipo);
+            }
+            ViewBag.Tipos = categorias.Distinct().ToList();
+            if (tipo != null)
+            {
+                productos = await repo.GetProductos(tipo);
+                ViewBag.Tipo = tipo;
+            }
+            return View(productos);
+        }
+
         //public IActionResult Producto(int id_producto)
         //{
         //    Producto producto = repo.GetProducto(id_producto);
@@ -65,21 +65,21 @@ namespace Oberon.Controllers
         //[ValidateAntiForgeryToken]
         //public IActionResult Producto(int id_producto, int id_talla, int unidades)
         //{
-            
+
         //    Producto producto = repo.GetProducto(id_producto);
         //    List<Talla> tallas = repo.GetTallasProducto(id_producto);
         //    ViewBag.Tallas = tallas;
         //    ProductoTalla pro = new ProductoTalla(producto, tallas);
-            
+
         //    List<Carro> carro = HttpContext.Session.GetObject<List<Carro>>("carro");
         //    Talla talla = repo.GetTalla(id_talla);
 
         //    Carro productoCarro = new Carro(producto, talla, unidades);
-        //    if (carro != null )
+        //    if (carro != null)
         //    {
-        //        if(carro.Exists(prod => prod.Talla.Id_Producto == id_producto && prod.Talla.Size == productoCarro.Talla.Size))
+        //        if (carro.Exists(prod => prod.Talla.Id_Producto == id_producto && prod.Talla.Size == productoCarro.Talla.Size))
         //        {
-        //            foreach(Carro c in carro)
+        //            foreach (Carro c in carro)
         //            {
         //                if (c.Talla.Id_Producto == id_producto && c.Talla.Size == productoCarro.Talla.Size)
         //                {
@@ -91,7 +91,7 @@ namespace Oberon.Controllers
         //                    }
         //                    else
         //                    {
-        //                        ViewBag.Mensaje = "No puedes comprar mas de " + c.Talla.Stock + " de esta talla."; 
+        //                        ViewBag.Mensaje = "No puedes comprar mas de " + c.Talla.Stock + " de esta talla.";
         //                    }
         //                }
         //            }
@@ -123,7 +123,7 @@ namespace Oberon.Controllers
         //        HttpContext.Session.SetObject<List<Carro>>("carro", carro);
         //        HttpContext.Session.SetInt32("carritoCount", carro.Count());
         //    }
-        //    if(carro != null)
+        //    if (carro != null)
         //    {
         //        double total = 0;
         //        foreach (Carro c in carro)
@@ -141,10 +141,10 @@ namespace Oberon.Controllers
         //public IActionResult Carrito(List<int> id_talla, List<int> unidades)
         //{
         //    List<Carro> carro = HttpContext.Session.GetObject<List<Carro>>("carro");
-        //    for(int i = 0; i < id_talla.Count(); i++)
+        //    for (int i = 0; i < id_talla.Count(); i++)
         //    {
         //        Carro c = carro.Find(x => x.Talla.Id_Talla == id_talla[i]);
-        //        if(c != null)
+        //        if (c != null)
         //        {
         //            c.unidades = unidades[i];
         //        }
@@ -165,7 +165,7 @@ namespace Oberon.Controllers
         //    if (carro != null)
         //    {
         //        double precioTotal = 0;
-        //        List<ProductoPedido> productos= new List<ProductoPedido>();
+        //        List<ProductoPedido> productos = new List<ProductoPedido>();
         //        foreach (Carro c in carro)
         //        {
         //            ProductoPedido p = new ProductoPedido(c.Talla.Id_Talla, c.unidades);
@@ -182,7 +182,7 @@ namespace Oberon.Controllers
         //    HttpContext.Session.Remove("carro");
         //    HttpContext.Session.Remove("carritoCount");
         //    HttpContext.Session.SetString("pedido", "Hemos actualizado tus pedidos! Gracias por confiar en nosotros <3");
-            
+
         //    return RedirectToAction("Carrito", "Home");
         //}
 
