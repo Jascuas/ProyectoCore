@@ -1,4 +1,4 @@
-﻿
+﻿@model RegisterCredentials
 @{
     ViewBag.Title = "Registro";
 }
@@ -27,6 +27,7 @@
                                     <div class="md-form mb-0">
                                         <input type="text" id="nombre" name="nombre" class="form-control">
                                         <label for="nombre" class="">Nombre</label>
+                                        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger"})
                                     </div>
                                 </div>
                                 <!--Grid column-->
@@ -35,6 +36,7 @@
                                     <div class="md-form mb-0">
                                         <input type="text" id="apellidos" name="apellidos" class="form-control">
                                         <label for="apellidos" class="">Apellidos</label>
+                                        @Html.ValidationMessageFor(model => model.Apellidos, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <!--Grid column-->
@@ -46,29 +48,37 @@
                             <div class="row">
 
                                 <!--Grid column-->
-                                <div class="col-lg-6">
+                                <div class="col-lg-12">
                                     <div class="md-form mb-0">
                                         <input type="email" id="email" name="email" class="form-control">
                                         <label for="email" class="">Email</label>
+                                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <!--Grid column-->
                                 <!--Grid column-->
                                 <div class="col-lg-6">
                                     <div class="md-form mb-0">
-                                        <input type="text" id="password" name="password" class="form-control">
+                                        <input type="password" id="password" name="password" class="form-control">
                                         <label for="password" class="">Password</label>
+                                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <!--Grid column-->
-
+                                <div class="col-lg-6">
+                                    <div class="md-form mb-0">
+                                        <input type="password" id="passwordConfirm" name="passwordConfirm" class="form-control">
+                                        <label for="passwordConfirm" class="">Confirmar contraseña</label>
+                                        @Html.ValidationMessageFor(model => model.PasswordConfirm, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
                             </div>
                             <!--Grid row-->
                             <!--Grid row-->
                             <div class="text-center text-md-left mt-4">
                                 <button type="submit" class="btn btn-primary">Registrarse</button>
                             </div>
-                            <div class="status"></div>
+                            <div class="status">@ViewBag.Mensaje</div>
                         }
                     </div>
                     <!--Grid column-->

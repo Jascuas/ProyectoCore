@@ -1,4 +1,4 @@
-﻿
+﻿@model LoginCredentials
 @{
     ViewBag.Title = "View";
 }
@@ -28,14 +28,16 @@
                                     <div class="md-form mb-0">
                                         <input type="text" id="identifier" name="identifier" class="form-control">
                                         <label for="identifier" class="">Email o Username</label>
+                                        @Html.ValidationMessageFor(model => model.Identifier, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <!--Grid column-->
                                 <!--Grid column-->
                                 <div class="col-lg-6">
                                     <div class="md-form mb-0">
-                                        <input type="text" id="password" name="password" class="form-control">
+                                        <input type="password" id="password" name="password" class="form-control">
                                         <label for="password" class="">Password</label>
+                                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <!--Grid column-->

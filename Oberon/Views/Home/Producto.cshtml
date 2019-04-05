@@ -1,5 +1,4 @@
-﻿@*@model Oberon.Models.ProductoTalla*@
-@section scripts{
+﻿@section scripts{
     <script>
         var tallas =  @Json.Serialize(@ViewBag.Tallas);
         var precio = $("#precio").text();
@@ -42,9 +41,6 @@
                 <!-- Featured image -->
                 <div class=" mb-lg-0 mb-4">
                     <img class="view overlay rounded z-depth-2 img-fluid" src="~/images/Productos/@Model.producto.Imagen" alt="Sample image">
-                    @*<a>
-                            <div class="mask rgba-white-slight"></div>
-                        </a>*@
                 </div>
 
             </div>
@@ -59,28 +55,20 @@
                     @Html.AntiForgeryToken()
                     <input type="hidden" id="id_producto" name="id_producto" class="text-hide" value="@Model.producto.Id_Producto">
                     <h6 class="grey-text">Tallas: </h6>
-                    <select class='browser-default  custom-select-sm' id="id_tallas" name="id_talla">
+                    <select class='browser-default  custom-select-sm' id="Size" name="Size">
                         @foreach (Talla t in @Model.tallas)
                         {
-                            @if (t.Stock != 0)
-                            {
-                                @if (@Model.tallas.Count() > 1)
-                                {
-                                    <option value="@t.Id_Talla" data-toggle="tooltip" data-placement="right">@t.Size </option>
-                                }
-                                else
-                                {
-                                    <option value="@t.Id_Talla" selected> Talla unica </option>;
-                                }
-                            }
-                            else
-                            {
-                                <option value="@t.Id_Talla" data-toggle="tooltip" data-placement="right" disabled>Talla @t.Size - Agotada </option>
-                            }
+                          <option value="@t.Size">@t.Size</option>
+                        }
                         }
                     </select>
                     <h6 class="grey-text">Unidades: </h6>
-                    <select class='browser-default  custom-select-sm' id="unidades" name="unidades"></select>
+                    <select class='browser-default  custom-select-sm' id="unidades" name="unidades">
+                        @for (int i = 0; i < 20; i++)
+                        {
+                        <option value="@i">@i</option>
+                        }
+                    </select>
                     <!-- Excerpt -->
                     <!-- Post data -->
                     <h6 class="grey-text">Precio: </h6>

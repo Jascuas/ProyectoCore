@@ -77,8 +77,18 @@ namespace Oberon.Repositories
         }
         public async Task<Usuario> GetUsuario(String token)
         {
-            Usuario usuario = await this.CallApi<Usuario>("api/Usuarios/" , token);
+            Usuario usuario = await this.CallApi<Usuario>("api/Usuario/" , token);
             return usuario;
+        }
+        public async Task<Usuario> GetUsuario(int id, String token)
+        {
+            Usuario usuario = await this.CallApi<Usuario>("api/Usuarios/"+id, token);
+            return usuario;
+        }
+        public async Task<List<Usuario>> GetUsuarios(String token)
+        {
+            List<Usuario> usuarios = await this.CallApi<List<Usuario>>("api/Usuarios/", token);
+            return usuarios;
         }
         public async Task<String> RegistrarUsuario(RegisterCredentials credentials)
         {
@@ -91,7 +101,7 @@ namespace Oberon.Repositories
                 HttpResponseMessage response = await cliente.PostAsJsonAsync("api/Usuarios/", credentials);
                 if (response.IsSuccessStatusCode)
                 {
-                    return await response.Content.ReadAsAsync<String>();
+                    return "Registrado correctamente, pruebe a loguearse";
                 }
                 else
                 {

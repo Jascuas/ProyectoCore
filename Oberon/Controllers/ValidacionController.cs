@@ -26,6 +26,10 @@ namespace Oberon.Controllers
         [HttpPost]
         public async Task<IActionResult>Login(LoginCredentials credentials)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(credentials);
+            }
             String token = await this.repo.GetToken(credentials);
             
             if (token != null)
@@ -60,6 +64,11 @@ namespace Oberon.Controllers
         [HttpPost]
         public async Task<IActionResult> Registro(RegisterCredentials credentials)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(credentials);
+            }
+           
             String mesaje = await this.repo.RegistrarUsuario(credentials);
             ViewBag.Mensaje = mesaje;
             return View();
@@ -70,6 +79,7 @@ namespace Oberon.Controllers
                 (CookieAuthenticationDefaults.AuthenticationScheme);
             HttpContext.Session.Remove("carro");
             HttpContext.Session.Remove("carritoCount");
+            HttpContext.Session.Remove("token");
             return RedirectToAction("Index", "Home");
         }
 

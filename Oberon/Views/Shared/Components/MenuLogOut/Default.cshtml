@@ -1,25 +1,27 @@
 ﻿@{
     ViewData["Title"] = "_PartialMenuUsuario";
+    int? count = ViewBag.Count;
 }
+@model Oberon.Models.Usuario
 
 
 <ul class="navbar-nav nav-flex-icons ">
-    @if (Context.User.Identity.IsAuthenticated != false)
+    @if (Model != null)
     {
         <li class="nav-item">
             <a class="nav-link waves-effect  hvr-underline-from-center" data-toggle="modal" data-target="#modalCart">
-                @if (@HttpContextAccessor.HttpContext.Session.GetInt32("carritoCount") > 0)
+                @if (count > 0)
                 {
-                <span class="badge red z-depth-1 mr-1 ">
-                    @HttpContextAccessor.HttpContext.Session.GetInt32("carritoCount")
-                </span>
+                    <span class="badge red z-depth-1 mr-1 ">
+                        @count
+                    </span>
                 }
                 <i class="fa fa-shopping-cart "></i>
                 <span class="clearfix d-none d-sm-inline-block  "> Carrito </span>
             </a>
         </li>
         <li class="nav-item">
-            <a asp-action="Perfil" asp-controller="Usuario" class="nav-link waves-effect  hvr-underline-from-center @(@ViewContext.RouteData.Values["action"].ToString() == "Perfil" ? "active1" : "")">@Context.User.Identity.Name</a>
+            <a asp-action="Perfil" asp-controller="Usuario" class="nav-link waves-effect  hvr-underline-from-center @(@ViewContext.RouteData.Values["action"].ToString() == "Perfil" ? "active1" : "")">@Model.User</a>
         </li>
         <li class="nav-item">
             <a asp-action="Logout" asp-controller="Validacion" class="nav-link waves-effect  hvr-underline-from-center"> Cerrar sesión</a>
@@ -38,4 +40,3 @@
 </ul>
 
 
- 

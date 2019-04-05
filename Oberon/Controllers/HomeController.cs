@@ -34,8 +34,6 @@ namespace Oberon.Controllers
         {
             return View();
         }
-
-
         public async Task<IActionResult> Tienda(String tipo)
         {
             List<Producto> productos = await repo.GetProductos();

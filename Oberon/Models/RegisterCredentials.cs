@@ -22,10 +22,16 @@ namespace Oberon.Models
             PasswordConfirm = passwordConfirm;
         }
 
+        [Required(ErrorMessage = "Necesita un nombre.")]
         public String Nombre { get; set; }
+        [Required(ErrorMessage = "Necesita un apellido.")]
         public String Apellidos { get; set; }
+        [Required(ErrorMessage = "Necesita un email.")]
+        [EmailAddress(ErrorMessage = "Necesita un email valido.")]
         public String Email { get; set; }
+        [Required(ErrorMessage = "Necesita una contraseña.")]
         public String Password { get; set; }
+        [Compare("Password", ErrorMessage = "Las contraseñas no coinciden.")]
         public String PasswordConfirm { get; set; }
     }
 }

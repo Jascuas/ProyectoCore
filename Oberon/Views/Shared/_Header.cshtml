@@ -1,0 +1,39 @@
+﻿<header>
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light scrolling-navbar top-nav-collapse" style="background-color:rgba(255, 255, 255, 0.8)">
+        <a class="navbar-brand waves-effect" href="@Url.Action("Index", "Home")">
+            <img src="~/images/Logo.webp" height="60" alt="mdb logo">
+        </a>
+        <!-- Collapse -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="container">
+
+            <!-- Brand -->
+            <!-- Links -->
+            <div class="collapse navbar-collapse  page-home" id="navbarSupportedContent">
+
+                <!-- Left -->
+                <ul class="navbar-nav mr-auto navigation " id="navegacion">
+                    <li class="nav-item">
+                        <a asp-action="Index" asp-controller="Home" class="nav-link hvr-underline-from-center @(@ViewContext.RouteData.Values["action"].ToString() == "Index" ? "active1" : "")">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-action="Tienda" asp-controller="Home" class="nav-link hvr-underline-from-center @(@ViewContext.RouteData.Values["action"].ToString() == "Tienda" ? "active1" : "")">Tienda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-action="Sobre" asp-controller="Home" class="nav-link hvr-underline-from-center @(@ViewContext.RouteData.Values["action"].ToString() == "Sobre" ? "active1" : "")">Sobre nosotros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-action="Contacto" asp-controller="Home" class="nav-link hvr-underline-from-center @(@ViewContext.RouteData.Values["action"].ToString() == "Contacto" ? "active1" : "")">Contacto</a>
+                    </li>
+
+                </ul>
+                @await Component.InvokeAsync("MenuLogOut")
+            </div>
+
+        </div>
+    </nav>
+
+</header>

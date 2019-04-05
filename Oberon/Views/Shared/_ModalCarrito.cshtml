@@ -1,8 +1,7 @@
-﻿<!-- Modal: modalCart -->
-@using Oberon.Extensions;
-@*@{
-    List<Carro> carro = HttpContextAccessor.HttpContext.Session.GetObject<List<Carro>>("carro");
-}*@
+﻿@using Oberon.Extensions;
+@{
+    List<ProductoPedido> carro = HttpContextAccessor.HttpContext.Session.GetObject<List<ProductoPedido>>("carro");
+}
 <div class="modal fade" id="modalCart" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -16,7 +15,7 @@
             </div>
             <!--Body-->
             <div class="modal-body">
-                @*@if (carro != null)
+                @if (carro != null)
                 {
                     <table class="table table-hover">
                         <thead>
@@ -28,14 +27,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            
-                            @foreach (Carro c in carro)
+
+                            @foreach (ProductoPedido p in carro)
                             {
                                 <tr>
-                                    <td>@c.Producto.Nombre</td>
-                                    <td>@c.Talla.Size</td>
-                                    <td>@c.unidades</td>
-                                    <td>@(@c.Producto.Precio * @c.unidades)€</td>
+                                    <td>@p.Producto.Nombre</td>
+                                    <td>@p.Size</td>
+                                    <td>@p.Unidades</td>
+                                    <td>@(@p.Producto.Precio * @p.Unidades)€</td>
                                 </tr>
                             }
 
@@ -45,7 +44,7 @@
                 else
                 {
                     <h4 class="modal-title text-warning" id="myModalLabel">Aun no has añadido productos a tu carro</h4>
-                }*@
+                }
 
             </div>
             

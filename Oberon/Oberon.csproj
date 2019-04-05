@@ -13,7 +13,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Views\Shared\_MenuLogOut.cshtml">
+    <Content Update="Views\Shared\Components\MenuLogOut\Default.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\_Header.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\_Footer.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\Shared\_PARTIALCOOKIECONSENT.cshtml">
