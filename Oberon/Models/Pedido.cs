@@ -9,7 +9,13 @@ namespace Oberon.Models
 {
     public class Pedido
     {
-        public int Id_pedido { get; set; }
+        public Pedido(int id_Usuario, double total)
+        {
+            Id_Usuario = id_Usuario;
+            Total = total;
+        }
+
+        public int? Id_pedido { get; set; }
         public int Id_Usuario { get; set; }
         public DateTime Fecha_Pedido { get; set; }
         public double Total { get; set; }

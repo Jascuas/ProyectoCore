@@ -1,8 +1,7 @@
 ﻿
-@*@model IEnumerable<Oberon.Models.Carro>
+@model IEnumerable<Oberon.Models.ProductoPedido>
 @section scripts{
     <script>
-        int 
         function cambiarPrecio(input) {
             var precio = $(input.parentNode.parentNode).siblings()[3];
             
@@ -11,7 +10,7 @@
             $("#fin").addClass("disabled");
         }
     </script>
-}*@
+}
 <div class="container my-5">
     <div class="card shopping-cart">
         <div class="card-header bg-dark text-light">
@@ -21,8 +20,9 @@
         </div>
         <div class="card-body ">
 
-            @*@if (Model != null && Model.Count() > 0)
-            {@using (Html.BeginForm())
+            @if (Model != null && Model.Count() > 0)
+            {
+                @using (Html.BeginForm())
                 {
                     <div class=" table-responsive-sm table-responsive-md">
                         <table class="table table-hover ">
@@ -37,25 +37,29 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @{int i = 0;}
+
 
                                 @Html.AntiForgeryToken()
-                                @foreach (Carro c in Model)
+
+                                @foreach (ProductoPedido p in Model)
                                 {
 
                                     <tr>
-                                        <td class="align-middle"><a asp-action="Tienda" asp-controller="Home" asp-route-id_Talla="@c.Talla.Id_Producto" class="thumbnail pull-left" > <img class=" rounded z-depth-2 img-fluid mr-3" src="~/images/Productos/@c.Producto.Imagen" style="max-width: 150px"> </a></td>
-                                        <td class="align-middle">@c.Producto.Nombre<input type="hidden" id="id_talla" name="id_talla" class="text-hide" value="@c.Talla.Id_Talla"></td>
-                                        <td class="align-middle">@c.Talla.Size</td>
+                                        <td class="align-middle"><a asp-action="Producto" asp-controller="Home" asp-route-id_producto="@p.Producto.Id_Producto" class="thumbnail pull-left"> <img class=" rounded z-depth-2 img-fluid mr-3" src="~/images/Productos/@p.Producto.Imagen" style="max-width: 150px"> </a></td>
+                                        <td class="align-middle">@p.Producto.Nombre><input type="hidden" id="id_producto" name="id" class="text-hide" value="@i"></td>
+                                        <td class="align-middle">@p.Size<input type="hidden" id="size" name="size" class="text-hide" value="@p.Size"></td>
                                         <td class="align-middle">
                                             <div class="def-number-input number-input m-0">
                                                 <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepDown(), cambiarPrecio(this.parentNode.querySelector('input[type=number]'))" class="minus"></button>
-                                                <input class="quantity" min="1" name="unidades" value="@c.unidades" type="number" oninput="cambiarPrecio(this)">
+                                                <input class="quantity" min="1" name="unidades" value="@p.Unidades" type="number" oninput="cambiarPrecio(this)">
                                                 <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepUp(), cambiarPrecio(this.parentNode.querySelector('input[type=number]'))" class="plus"></button>
                                             </div>
                                         </td>
-                                        <td class="align-middle" id="@c.Talla.Id_Talla" data-value="@c.Producto.Precio">@(@c.Producto.Precio * @c.unidades)€</td>
-                                        <td class="align-middle"><a asp-action="Carrito" asp-controller="Home" asp-route-id_Talla="@c.Talla.Id_Talla"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a></td>
+                                        <td class="align-middle" id="@i" data-value="@p.Producto.Precio">@(@p.Producto.Precio * @p.Unidades)€</td>
+                                        <td class="align-middle"><a asp-action="Carrito" asp-controller="Home" asp-route-id="@i"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a></td>
                                     </tr>
+                                    i++;
                                 }
 
 
@@ -68,21 +72,23 @@
                         </div>
                     </div>
                 }
-                    <div class="card-footer">
+                <div class="card-footer">
 
-                        <div class="float-right">
-                            <span id="mensaje" class="text-warning text-muted"></span>
-                            <a asp-action="AñadirPedido" asp-controller="Home" class="btn btn-sm btn-outline-success" id="fin">Finalizar pedido</a>
+                    <div class="float-right">
+                        <span id="mensaje" class="text-warning text-muted"></span>
+                        <a asp-action="AñadirPedido" asp-controller="Home" class="btn btn-sm btn-outline-success" id="fin">Finalizar pedido</a>
 
-                        </div>
                     </div>
-        }else if (ViewBag.Mensaje != null)
+                </div>
+            }
+            else if (ViewBag.Mensaje != null)
             {
-            <h4 class="modal-title text-success" id="myModalLabel">@ViewBag.Mensaje</h4>
-            } else
+                <h4 class="modal-title text-success" id="myModalLabel">@ViewBag.Mensaje</h4>
+            }
+            else
             {
                 <h4 class="modal-title text-warning" id="myModalLabel">Aun no has añadido productos al carrito</h4>
-            }*@
+            }
         </div>
 
 

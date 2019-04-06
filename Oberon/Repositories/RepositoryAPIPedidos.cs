@@ -60,7 +60,7 @@ namespace Oberon.Repositories
             return pedidos;
         }
 
-        public async Task<String> RegistrarPedido(Pedido pedido, String token)
+        public async Task<Pedido> RegistrarPedido(Pedido pedido, String token)
         {
             using (HttpClient cliente = new HttpClient())
             {
@@ -71,11 +71,11 @@ namespace Oberon.Repositories
                 HttpResponseMessage response = await cliente.PostAsJsonAsync("api/Pedidos/", pedido);
                 if (response.IsSuccessStatusCode)
                 {
-                    return await response.Content.ReadAsAsync<String>();
+                    return await response.Content.ReadAsAsync<Pedido>();
                 }
                 else
                 {
-                    return "Error";
+                    return null;
                 }
             }
         }

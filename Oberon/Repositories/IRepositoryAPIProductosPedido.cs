@@ -10,6 +10,6 @@ namespace Oberon.Repositories
     {
         Task<ProductoPedido> GetProductoPedido(int id_producto, String token);
         Task<List<ProductoPedido>>  GetProductosPedido(int id_pedido, String token);
-        Task<String> RegistrarProductoPedido(ProductoPedido pro, String token);
+        Task<String> RegistrarProductoPedido(ProductoPedidoDTO pro, String token);
     }
 }

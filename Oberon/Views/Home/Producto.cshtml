@@ -1,31 +1,12 @@
-﻿@section scripts{
+﻿@model Oberon.Models.Producto
+@section scripts{
     <script>
-        var tallas =  @Json.Serialize(@ViewBag.Tallas);
-        var precio = $("#precio").text();
-
         $(document).ready(function () {
-            cargarUnidades();
-            $("#id_tallas").change(function () {
-                cargarUnidades();
-            });
-
+            var precio = $("#precio").data("value");
             $("#unidades").change(function () {
-                $("#precio").text((precio * $("#unidades").val()).toFixed(2));
+                $("#precio").text((precio * $("#unidades option:selected").val()).toFixed(2));
             });
         });
-
-        function cargarUnidades() {
-            var id_talla = $("#id_tallas option:selected").val();
-            var html = "";
-            $(tallas).each(function (index, element) {
-                if (element.id_Talla == id_talla) {
-                    for (i = 1; i <= element.stock; i++)
-                        html += "<option value='" + i + "'>" + i + "</option>";
-                }
-            });
-            $("#unidades").html(html);
-            $("#precio").text((precio * $("#unidades").val()).toFixed(2));
-        }
     </script>
 }
 <div class="container mt-5 pt-5">
@@ -40,7 +21,7 @@
 
                 <!-- Featured image -->
                 <div class=" mb-lg-0 mb-4">
-                    <img class="view overlay rounded z-depth-2 img-fluid" src="~/images/Productos/@Model.producto.Imagen" alt="Sample image">
+                    <img class="view overlay rounded z-depth-2 img-fluid" src="~/images/Productos/@Model.Imagen" alt="Sample image">
                 </div>
 
             </div>
@@ -49,33 +30,35 @@
             <div class="col-lg-6">
                 <!-- Post title -->
                 <h6 class="grey-text">Tipo: </h6>
-                <h3 class="font-weight-bold mb-3"><strong>@Model.producto.Nombre</strong></h3>
+                <h3 class="font-weight-bold mb-3"><strong>@Model.Nombre</strong></h3>
                 @using (Html.BeginForm())
                 {
                     @Html.AntiForgeryToken()
-                    <input type="hidden" id="id_producto" name="id_producto" class="text-hide" value="@Model.producto.Id_Producto">
+                    <input type="hidden" id="id_producto" name="id_producto" class="text-hide" value="@Model.Id_Producto">
                     <h6 class="grey-text">Tallas: </h6>
                     <select class='browser-default  custom-select-sm' id="Size" name="Size">
-                        @foreach (Talla t in @Model.tallas)
+                        @foreach (Talla t in @Model.Tallas)
                         {
-                          <option value="@t.Size">@t.Size</option>
+                            <option value="@t.Size">@t.Size</option>
                         }
                         }
                     </select>
                     <h6 class="grey-text">Unidades: </h6>
                     <select class='browser-default  custom-select-sm' id="unidades" name="unidades">
-                        @for (int i = 0; i < 20; i++)
+                        @for (int i = 1; i < 21; i++)
                         {
-                        <option value="@i">@i</option>
+                            <option value="@i">@i</option>
                         }
                     </select>
                     <!-- Excerpt -->
                     <!-- Post data -->
                     <h6 class="grey-text">Precio: </h6>
-                    <h5 class="text-primary"><span id="precio">@Model.producto.Precio</span>€</h5>
+                    <div class="text-primary" id="precio" data-value="@Model.Precio">
+                        <span>@Model.Precio</span>€
+                    </div>
                     <br />
                     <!-- Read more button -->
-                    @if (Context.User.Identity.IsAuthenticated != false)
+                    @if (Context.User.Identity.IsAuthenticated == true)
                     {
                         <button type="submit" class="btn btn-outline-primary btn-sm ">Añadir al carro</button>
 
@@ -90,7 +73,7 @@
                     <hr />
                     <h6 class="grey-text">Detalles: </h6>
                     <p>
-                        @Model.producto.Detalles
+                        @Model.Detalles
                     </p>
 
                 }
@@ -101,7 +84,7 @@
 
                 <h6 class="grey-text">Informacion: </h6>
                 <p>
-                    @Model.producto.Informacion
+                    @Model.Informacion
                 </p>
             </div>
         </div>

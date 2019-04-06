@@ -53,7 +53,7 @@ namespace Oberon.Repositories
             return productosPedido;
         }
 
-        public async Task<String> RegistrarProductoPedido(ProductoPedido pro, String token)
+        public async Task<String> RegistrarProductoPedido(ProductoPedidoDTO pro, String token)
         {
             using (HttpClient cliente = new HttpClient())
             {
