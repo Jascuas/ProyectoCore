@@ -109,6 +109,25 @@ namespace Oberon.Repositories
                 }
             }
         }
+        public async Task<String> ModificarUsuario(Usuario user, String token)
+        {
+            using (HttpClient cliente = new HttpClient())
+            {
+                cliente.BaseAddress = new Uri(this.uriapi);
+                cliente.DefaultRequestHeaders.Accept.Clear();
+                cliente.DefaultRequestHeaders.Accept.Add(headerjson);
+                cliente.DefaultRequestHeaders.Add("Authorization", "bearer " + token);
+                HttpResponseMessage response = await cliente.PutAsJsonAsync("api/Usuarios/", user);
+                if (response.IsSuccessStatusCode)
+                {
+                    return "Modificaciones realizadas exitosamente";
+                }
+                else
+                {
+                    return "No hemos podido modificarle, pruebe otra vez";
+                }
+            }
+        }
         public async Task<Pedido> GetPedido(int id_usuario, int id_pedido, String token)
         {
             Pedido pedido = await this.CallApi<Pedido>("api/Usuarios/"+id_usuario+"/Pedidos/"+id_pedido, token);

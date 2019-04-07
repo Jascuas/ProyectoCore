@@ -7,34 +7,7 @@
 
         <div class="row">
 
-            <!--Grid column-->
-            <div class="col-md-3 mb-md-0 mb-5">
-                <!-- Card Dark -->
-                <div class="card">
-                    <!-- Card content -->
-                    <div class="card-body elegant-color white-text rounded-bottom">
-
-                        <!-- Title -->
-                        <h4 class="card-title">@Model.User</h4>
-                        <hr class="hr-light">
-                        <!-- Text -->
-                        <p class="card-text white-text mb-4">Aqui podras comprobar tus pedidos y editar tu usuario</p>
-                        <!-- Link --> 
-                        <ul>
-                            <li>
-                                <a asp-action="Pedidos" asp-controller="Usuario" class="text-white">Pedidos</a>
-                            </li>
-
-                            <li>
-                                <a asp-action="Pedidos" asp-controller="Usuario" class="text-white">Modificar informacion</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                </div>
-                <!-- Card Dark -->
-            </div>
-            <!--Grid column-->
+            @await Component.InvokeAsync("MenuPerfil")
             <!--Grid column-->
             <div class="col-md-9 text-center">
                 <div class="card shopping-cart">
@@ -59,14 +32,14 @@
                                     <tbody>
                                         @foreach (ProductoPedido c in productos)
                                         {
-                                        <tr>
-                                            <td class="align-middle"><a asp-controller="Home" asp-action="Producto" asp-route-id_producto="@c.Producto.Id_Producto" class="thumbnail pull-left"> <img class=" rounded z-depth-2 img-fluid mr-3" src="~/images/Productos/@c.Producto.Imagen" style="max-width: 150px"> </a></td>
-                                            <td class="align-middle">@c.Producto.Nombre </td>
-                                            <td class="align-middle">@c.Size</td>
-                                            <td class="align-middle">@c.Unidades</td>
-                                            <td class="align-middle">@(@c.Producto.Precio * @c.Unidades)€</td>
-                                            
-                                        </tr>
+                                            <tr>
+                                                <td class="align-middle"><a asp-controller="Home" asp-action="Producto" asp-route-id_producto="@c.Producto.Id_Producto" class="thumbnail pull-left"> <img class=" rounded z-depth-2 img-fluid mr-3" src="~/images/Productos/@c.Producto.Imagen" style="max-width: 150px"> </a></td>
+                                                <td class="align-middle">@c.Producto.Nombre </td>
+                                                <td class="align-middle">@c.Size</td>
+                                                <td class="align-middle">@c.Unidades</td>
+                                                <td class="align-middle">@(@c.Producto.Precio * @c.Unidades)€</td>
+
+                                            </tr>
                                         }
 
 

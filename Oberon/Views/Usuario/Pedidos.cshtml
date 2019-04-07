@@ -6,34 +6,7 @@
 
         <div class="row">
 
-            <!--Grid column-->
-            <div class="col-md-3 mb-md-0 mb-5">
-                <!-- Card Dark -->
-                <div class="card">
-                    <!-- Card content -->
-                    <div class="card-body elegant-color white-text rounded-bottom">
-
-                        <!-- Title -->
-                        <h4 class="card-title">@Model.User</h4>
-                        <hr class="hr-light">
-                        <!-- Text -->
-                        <p class="card-text white-text mb-4">Aqui podras comprobar tus pedidos y editar tu usuario</p>
-                        <!-- Link -->
-                        <ul>
-                            <li>
-                                <a asp-action="Pedidos" asp-controller="Usuario" class="text-white">Pedidos</a>
-                            </li>
-
-                            <li>
-                                <a asp-action="Pedidos" asp-controller="Usuario" class="text-white">Modificar informacion</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                </div>
-                <!-- Card Dark -->
-            </div>
-            <!--Grid column-->
+            @await Component.InvokeAsync("MenuPerfil")
             <!--Grid column-->
             <div class="col-md-9 text-center">
                 <div class="card shopping-cart">
@@ -55,11 +28,11 @@
                                     <tbody>
                                         @foreach (Pedido p in pedidos)
                                         {
-                                        <tr>
-                                            <td class="align-middle "><a asp-action="ProductosPedido" asp-controller="Usuario" asp-route-id_pedido="@p.Id_pedido" class="text-info">Ver detalles del pedido</a></td>
-                                            <td class="align-middle">@p.Fecha_Pedido</td>
-                                            <td class="align-middle text-primary h6">@p.Total €</td>
-                                        </tr>
+                                            <tr>
+                                                <td class="align-middle "><a asp-action="ProductosPedido" asp-controller="Usuario" asp-route-id_pedido="@p.Id_pedido" class="text-info">Ver detalles del pedido</a></td>
+                                                <td class="align-middle">@p.Fecha_Pedido</td>
+                                                <td class="align-middle text-primary h6">@p.Total €</td>
+                                            </tr>
                                         }
 
 

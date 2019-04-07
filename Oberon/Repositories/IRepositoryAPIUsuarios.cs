@@ -14,6 +14,7 @@ namespace Oberon.Repositories
         Task<Usuario> GetUsuario(int id, String token);
         Task<List<Usuario>> GetUsuarios(String token);
         Task<String> RegistrarUsuario(RegisterCredentials credentials);
+        Task<String> ModificarUsuario(Usuario user, String token);
         //Task<List<Usuario>> Usuarios(String token);
         Task<Pedido> GetPedido(int id_usuario, int id_pedido, String token);
         Task<List<Pedido>> GetPedidos(int id_usuario, String token);

@@ -1,0 +1,64 @@
+﻿
+<!DOCTYPE html>
+
+<html class="h-100">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/x-icon" href="~/images/Oberon.png">
+    <title>Oberon</title>
+    <environment include="Development">
+        <!-- Bootstrap -->
+        <link href="~/css/bootstrap.css" rel="stylesheet" />
+        <!-- Material Design Bootstrap -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.1/css/mdb.min.css" />
+        <!-- Awesome -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+        <!-- Css -->
+        <link href="~/css/starter-template.css" rel="stylesheet" />
+        <!-- Cookie -->
+        <link href="~/css/cookiealert.css" rel="stylesheet" />
+    </environment>
+    <environment include="Production">
+        <!-- Bootstrap -->
+        <link href="~/css/bootstrap.css" rel="stylesheet" />
+        <!-- Material Design Bootstrap -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.1/css/mdb.min.css" />
+        <!-- Awesome -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+        <!-- Css -->
+        <link href="~/css/starter-template.css" rel="stylesheet" />
+        <!-- Cookie -->
+        <link href="~/css/cookiealert.css" rel="stylesheet" />
+    </environment>
+</head>
+<body class="d-flex flex-column h-100">
+    <partial name="_Header" />
+    <main class="flex-shrink-0">
+        @RenderBody()
+    </main>
+    <partial name="_Footer" />
+    <partial name="_ModalCarrito" />
+    <partial name="_PartialCookieConsent" />
+    <environment include="Development">
+        <script src="~/js/jquery-3.3.1.min.js"></script>
+        <script src="~/js/bootstrap.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.1/js/mdb.min.js"></script>
+        <script src="~/js/cookiealert.js"></script>
+    </environment>
+    <environment include="Production">
+        <script src="~/js/jquery-3.3.1.min.js"></script>
+        <script src="~/js/bootstrap.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.1/js/mdb.min.js"></script>
+        <script src="~/js/cookiealert.js"></script>
+    </environment>
+    <script>
+    // Animations initialization
+        new WOW().init();
+    </script>
+    @RenderSection("scripts", false)
+
+</body>
+</html>

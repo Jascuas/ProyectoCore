@@ -21,7 +21,15 @@
             </a>
         </li>
         <li class="nav-item">
-            <a asp-action="Perfil" asp-controller="Usuario" class="nav-link waves-effect  hvr-underline-from-center @(@ViewContext.RouteData.Values["action"].ToString() == "Perfil" ? "active1" : "")">@Model.User</a>
+            @if (Model.Rol == "admin")
+            {
+                <a asp-area="Admin" asp-action="Index" asp-controller="Admin" class="nav-link waves-effect  hvr-underline-from-center @(@ViewContext.RouteData.Values["controller"].ToString() == "Admin" ? "active1" : "")">@Model.User</a>
+            }
+            else
+            {
+                <a asp-action="Perfil" asp-controller="Usuario" class="nav-link waves-effect  hvr-underline-from-center @(@ViewContext.RouteData.Values["controller"].ToString() == "Usuario" ? "active1" : "")">@Model.User</a>
+            }
+
         </li>
         <li class="nav-item">
             <a asp-action="Logout" asp-controller="Validacion" class="nav-link waves-effect  hvr-underline-from-center"> Cerrar sesión</a>

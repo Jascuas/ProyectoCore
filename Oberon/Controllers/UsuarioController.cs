@@ -16,10 +16,9 @@ namespace Oberon.Controllers
         {
             this.repo = repo;
         }
-        public async Task<IActionResult> Perfil()
+        public IActionResult Perfil()
         {
-            Usuario user = await repo.GetUsuario(HttpContext.Session.GetString("token"));
-            return View(user);
+            return View();
         }
         public async Task<IActionResult> Pedidos()
         {
@@ -38,6 +37,25 @@ namespace Oberon.Controllers
             ViewBag.Productos = productosPedido;
             ViewBag.Pedido = pedido;
             return View(user);
+        }
+        public async Task<IActionResult> Informacion()
+        {
+            String token = HttpContext.Session.GetString("token");
+            Usuario user = await repo.GetUsuario(token);
+            return View(user);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Informacion(Usuario user)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(user);
+            }
+            String token = HttpContext.Session.GetString("token");
+            String mesaje = await this.repo.ModificarUsuario(user, token);
+            Usuario u = await repo.GetUsuario(token);
+            ViewBag.Mensaje = mesaje;
+            return View(u);
         }
     }
 }

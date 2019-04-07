@@ -1,45 +1,14 @@
-﻿@model Oberon.Models.Usuario
-
-@{
-    ViewData["Title"] = "Perfil";
-}
-
+﻿
 <div class="col-10 my-5">
     <section class="mb-4">
 
         <div class="row">
-
+            @await Component.InvokeAsync("MenuPerfil")
             <!--Grid column-->
-            <div class="col-md-3 mb-md-0 mb-5">
-                <!-- Card Dark -->
-                <div class="card">
-                    <!-- Card content -->
-                    <div class="card-body elegant-color white-text rounded-bottom">
-
-                        <!-- Title -->
-                        <h4 class="card-title">@Model.User</h4>
-                        <hr class="hr-light">
-                        <!-- Text -->
-                        <p class="card-text white-text mb-4">Aqui podras comprobar tus pedidos y editar tu usuario</p>
-                        <!-- Link -->
-                        <ul>
-                            <li >
-                                <a asp-action="Pedidos" asp-controller="Usuario" class="text-white">Pedidos</a>
-                            </li>
-
-                            <li >
-                                <a asp-action="Pedidos" asp-controller="Usuario" class="text-white">Modificar informacion</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                </div>
-                <!-- Card Dark -->
-            </div>
             <!--Grid column-->
             <!--Grid column-->
             <div class="col-md-9 text-center">
-                
+
             </div>
             <!--Grid column-->
 
@@ -48,5 +17,4 @@
     </section>
     <!--Section: Contact v.2-->
 </div>
-
 

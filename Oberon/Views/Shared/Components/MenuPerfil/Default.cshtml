@@ -1,0 +1,32 @@
+﻿@model Oberon.Models.Usuario
+
+<div class="col-md-3 mb-md-0 mb-5">
+    <!-- Card Dark -->
+    <div class="card">
+        <!-- Card content -->
+        <div class="card-body elegant-color white-text rounded">
+
+            <!-- Title -->
+            <h4 class="card-title">@Model.User</h4>
+            <hr class="hr-light">
+            <!-- Text -->
+            <p class="card-text white-text mb-4">Aqui podras comprobar tus pedidos y editar tu usuario</p>
+            <!-- Link -->
+            <ul>
+                <li>
+                    <a asp-action="Pedidos" asp-controller="Usuario" class="text-white">Pedidos</a>
+                </li>
+
+                <li>
+                    <a asp-action="Informacion" asp-controller="Usuario" class="text-white">Modificar informacion</a>
+                </li>
+                <li>
+                    <a asp-action="Eliminar" asp-controller="Usuario" class="text-danger">Eliminar cuenta</a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+    <!-- Card Dark -->
+</div>
+

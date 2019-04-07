@@ -1,0 +1,89 @@
+﻿@model Oberon.Models.Usuario
+<div class="col-12 my-5">
+    <section class="mb-4">
+
+        <div class="row">
+
+            @await Component.InvokeAsync("MenuPerfil")
+            <!--Grid column-->
+            <div class="col-md-9 ">
+                <div class="card col-lg-8 mx-auto ">
+                    <div class="card-body ">
+                        <!--Section heading-->
+                        <img src="~/images/Oberon.png" height="60" alt="mdb logo">
+                        <h2 class="h1-responsive font-weight-bold text-center mb-4">Modificar informacion</h2>
+                        <!--Section description-->
+
+
+                        <div class="row">
+
+                            <!--Grid column-->
+                            <div class="col-lg-12 mb-lg-0 mb-5">
+                                @using (Html.BeginForm())
+                                {
+                                    @Html.AntiForgeryToken()
+
+                                    <div class="row">
+
+                                        <!--Grid column-->
+                                        <div class="col-lg-6">
+                                            <div class="md-form mb-0">
+                                                <input type="text" id="nombre" name="nombre" class="form-control" value="@Model.Nombre">
+                                                <label for="nombre" class="">Nombre</label>
+                                                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <!--Grid column-->
+                                        <!--Grid column-->
+                                        <div class="col-lg-6">
+                                            <div class="md-form mb-0">
+                                                <input type="text" id="apellidos" name="apellidos" class="form-control" value="@Model.Apellidos">
+                                                <label for="apellidos" class="">Apellidos</label>
+                                                @Html.ValidationMessageFor(model => model.Apellidos, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <!--Grid column-->
+
+                                    </div>
+                                    <!--Grid row-->
+                                    <!--Grid row-->
+                                    <!--Grid row-->
+                                    <div class="row">
+
+                                        <!--Grid column-->
+                                        <div class="col-lg-6">
+                                            <div class="md-form mb-0">
+                                                <input type="email" id="email" name="email" class="form-control" value="@Model.Email">
+                                                <label for="email" class="">Email</label>
+                                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <!--Grid column-->
+                                        <!--Grid column-->
+                                        <div class="col-lg-6">
+                                            <div class="md-form mb-0">
+                                                <input type="text" id="user" name="user" class="form-control" value="@Model.User">
+                                                <label for="user" class="">Nombre de usuario</label>
+                                                @Html.ValidationMessageFor(model => model.User, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--Grid row-->
+                                    <!--Grid row-->
+                                    <div class="text-center text-md-left mt-4">
+                                        <button type="submit" class="btn btn-primary">Modificar</button>
+                                    </div>
+                                    <div class="status">@ViewBag.Mensaje</div>
+                                }
+                            </div>
+                            <!--Grid column-->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+    <!--Section: Contact v.2-->
+</div>
