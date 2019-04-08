@@ -6,15 +6,11 @@
 
 <ul class="navbar-nav nav-flex-icons ">
     <li class="nav-item">
-        <a asp-area="Admin" asp-action="Index" asp-controller="Admin" class="nav-link waves-effect  hvr-underline-from-center @(@ViewContext.RouteData.Values["controller"].ToString() == "Admin" ? "active1" : "")">@Model.User</a>
-
-
+        <span>Bienvenido @Model.User, aqui podras administrar la aplicacion.</span>
     </li>
     <li class="nav-item">
         <a asp-action="Logout" asp-controller="Validacion" class="nav-link waves-effect  hvr-underline-from-center"> Cerrar sesión</a>
     </li>
-   
-
 </ul>
 
 

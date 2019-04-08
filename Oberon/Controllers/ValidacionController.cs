@@ -49,6 +49,7 @@ namespace Oberon.Controllers
                     ,
                         ExpiresUtc = DateTime.Now.AddDays(30)
                     });
+                if(usuario.Rol.ToUpper() == "ADMIN") return RedirectToAction("Index", "Home", new { @area = "Admin" });
                 return RedirectToAction("Index", "Home");
             }
             else
