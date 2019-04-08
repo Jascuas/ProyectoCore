@@ -3,14 +3,24 @@
 }
 @model Oberon.Models.Usuario
 
+<div class="sidebar-header">
+    <div class="user-pic">
+        <img class="img-responsive img-rounded" src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg"
+             alt="User picture">
+    </div>
+    <div class="user-info">
+        <span class="user-name">
+            @Model.Nombre
+            <strong>@Model.Apellidos</strong>
+        </span>
+        <span class="user-role">@Model.Rol</span>
+        <span class="user-status">
+            <i class="fa fa-circle"></i>
+            <span>Online</span>
+            
+        </span>
+    </div>
+</div>
 
-<ul class="navbar-nav nav-flex-icons ">
-    <li class="nav-item">
-        <span>Bienvenido @Model.User, aqui podras administrar la aplicacion.</span>
-    </li>
-    <li class="nav-item">
-        <a asp-action="Logout" asp-controller="Validacion" class="nav-link waves-effect  hvr-underline-from-center"> Cerrar sesión</a>
-    </li>
-</ul>
 
 
