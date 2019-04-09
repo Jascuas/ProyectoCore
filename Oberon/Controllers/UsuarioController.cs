@@ -44,7 +44,7 @@ namespace Oberon.Controllers
             Usuario user = await repo.GetUsuario(token);
             return View(user);
         }
-        [HttpPost]
+        [HttpPut]
         public async Task<IActionResult> Informacion(Usuario user)
         {
             if (!ModelState.IsValid)

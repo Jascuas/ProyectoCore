@@ -52,7 +52,11 @@ namespace Oberon.Repositories
             List<ProductoPedido> productosPedido = await this.CallApi<List<ProductoPedido>>("api/ProductosPedido/" + id_pedido, token);
             return productosPedido;
         }
-
+        public async Task<List<ProductoPedido>> GetProductosPedidos(string token)
+        {
+            List<ProductoPedido> productosPedido = await this.CallApi<List<ProductoPedido>>("api/ProductosPedido/", token);
+            return productosPedido;
+        }
         public async Task<String> RegistrarProductoPedido(ProductoPedidoDTO pro, String token)
         {
             using (HttpClient cliente = new HttpClient())

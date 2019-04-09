@@ -2,16 +2,74 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Oberon.Models;
+using Oberon.Repositories;
 
 namespace Oberon.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        IRepositoryAPIProductos repoProductos;
+        IRepositoryAPIPedidos repoPedidos;
+        IRepositoryAPIProductosPedido repoProductosPedido;
+        IRepositoryAPIUsuarios repo;
+        public HomeController(IRepositoryAPIUsuarios repo, IRepositoryAPIProductos repoProductos, IRepositoryAPIPedidos repoPedidos, IRepositoryAPIProductosPedido repoProductosPedido)
         {
-            return View();
+            this.repo = repo;
+            this.repoProductos = repoProductos;
+            this.repoPedidos = repoPedidos;
+            this.repoProductosPedido = repoProductosPedido;
+        }
+        public async Task<IActionResult> Index()
+        {
+            String token = HttpContext.Session.GetString("token");
+            Usuario user = await repo.GetUsuario(token);
+            return View(user);
+        }
+        public async Task<IActionResult> ModificarProductos()
+        {
+            List<Producto> productos = await repoProductos.GetProductos();
+            return View(productos);
+        }
+        [HttpPut]
+        public async Task<IActionResult> ModificarProductos(Producto producto)
+        {
+            String token = HttpContext.Session.GetString("token");
+            List<Producto> productos = await repoProductos.GetProductos();
+            return View(productos);
+        }
+        public async Task<IActionResult> ModificarUsuarios()
+        {
+            String token = HttpContext.Session.GetString("token");
+            List<Usuario> usuarios = await repo.GetUsuarios(token);
+            return View(usuarios);
+        }
+        [HttpPut]
+        public async Task<IActionResult> ModificarUsuarios(Usuario user)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(user);
+            }
+            String token = HttpContext.Session.GetString("token");
+            String mesaje = await this.repo.ModificarUsuario(user, token);
+            List<Usuario> usuarios = await repo.GetUsuarios(token);
+            ViewBag.Mensaje = mesaje;
+            return View(usuarios);
+        }
+        public async Task<IActionResult> ShowStock()
+        {
+            List<Producto> productos = await repoProductos.GetProductos();
+            return View(productos);
+        }
+        public async Task<IActionResult> Sells()
+        {
+            String token = HttpContext.Session.GetString("token");
+            List<ProductoPedido> productos = await repoProductosPedido.GetProductosPedidos(token);
+            return View(productos);
         }
     }
 }

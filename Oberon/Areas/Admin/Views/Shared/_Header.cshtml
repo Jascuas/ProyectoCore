@@ -71,7 +71,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#">Modificar productos</a>
+                                            <a asp-action="ModificarProductos" asp-controller="Home">Modificar productos</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -87,7 +87,7 @@
                                             <a href="#">Añadir usuarios</a>
                                         </li>
                                         <li>
-                                            <a href="#">Modificar usuarios</a>
+                                            <a asp-action="ModificarUsuarios" asp-controller="Home">Modificar usuarios</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -100,13 +100,10 @@
                                 <div class="sidebar-submenu">
                                     <ul>
                                         <li>
-                                            <a href="#">Stock</a>
+                                            <a asp-action="ShowStock" asp-controller="Home">Ver stock</a>
                                         </li>
                                         <li>
-                                            <a href="#">Productos mas vendidos</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Valance</a>
+                                            <a asp-action="Sells" asp-controller="Home">Ventas</a>
                                         </li>
                                     </ul>
                                 </div>
