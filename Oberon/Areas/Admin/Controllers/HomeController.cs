@@ -68,8 +68,25 @@ namespace Oberon.Areas.Admin.Controllers
         public async Task<IActionResult> Sells()
         {
             String token = HttpContext.Session.GetString("token");
+            List<Pedido> pedidos = await repoPedidos.GetPedidos(token);
+            ViewBag.Pedidos = pedidos;
             List<ProductoPedido> productos = await repoProductosPedido.GetProductosPedidos(token);
-            return View(productos);
+            List<ProductoPedido> productosTotal = new List<ProductoPedido>();
+            Boolean añadir = true;
+            foreach (ProductoPedido p in productos)
+            {
+                añadir = true;
+                foreach(ProductoPedido pro in productosTotal)
+                {
+                    if(p.Producto.Id_Producto == pro.Producto.Id_Producto && p.Size == pro.Size)
+                    {
+                        pro.Unidades += p.Unidades;
+                        añadir = false;
+                    }
+                }
+                if (añadir) productosTotal.Add(p);
+            }
+            return View(productosTotal);
         }
     }
 }

@@ -3,75 +3,137 @@
 @{
     ViewData["Title"] = "ShowStock";
 }
-
-<h2>ShowStock</h2>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id_Producto)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Tipo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Estado)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Precio)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Imagen)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Detalles)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Informacion)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id_Producto)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tipo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Estado)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Precio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Imagen)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Detalles)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Informacion)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
+@section scripts{
+    <script>
+        var model = @Html.Raw(Json.Serialize(Model));
+        console.log(model);
+        var camisetas = new Array();
+        var camisetasT = 0;
+        var camisetasU = new Array();
+        var sudaderas = new Array();
+        var sudaderasT = 0;
+        var sudaderasU = new Array();
+        var varios = new Array();
+        var variosT = 0;
+        var variosU = new Array();
+        var tiempo = new Array();
+        $.each(model, function (index, value) {
+            if (value.tipo == "Camiseta") {
+                camisetas.push(value.nombre);
+                camisetasT += contar(value.tallas);
+                camisetasU.push(contar(value.tallas));
+            } else if (value.tipo == "Sudadera") {
+                sudaderas.push(value.nombre);
+                sudaderasT += contar(value.tallas);
+                sudaderasU.push(contar(value.tallas));
+            } else if (value.tipo == "Cóctel") {
+                varios.push(value.nombre);
+                variosT += contar(value.tallas);
+                variosU.push(contar(value.tallas));
+            }
+        });
+        function contar(x) {
+            var aux = 0;
+            $.each(x, function (index, value) {
+                aux += value.stock;
+            });
+            return aux;
+        }
+        var ctx = document.getElementById("total").getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ["Camisetas", "Sudaderas", "Varios"],
+                datasets: [{
+                    label: 'Total stock por tipo',
+                    data: [camisetasT, sudaderasT, variosT],
+                    backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360"],
+                    hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774"]
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+        var ctx = document.getElementById("camisetas").getContext('2d');
+        var myChart = new Chart(ctx, {
+            "type": "pie",
+            "data": {
+                "labels": camisetas,
+                "datasets": [{
+                    "label": "Stock camisetas",
+                    "data": camisetasU,
+                    "fill": false,
+                    backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360"],
+                    hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774"]
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+        var ctx = document.getElementById("sudaderas").getContext('2d');
+        var myChart = new Chart(ctx, {
+            "type": "pie",
+            "data": {
+                "labels": sudaderas,
+                "datasets": [{
+                    "label": "Stock sudaderas",
+                    "data": sudaderasU,
+                    "fill": false,
+                    backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360"],
+                    hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774"]
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+        var ctx = document.getElementById("varios").getContext('2d');
+        var myChart = new Chart(ctx, {
+            "type": "pie",
+            "data": {
+                "labels": varios,
+                "datasets": [{
+                    "label": "Stock de varios",
+                    "data": variosU,
+                    "fill": false,
+                    backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360", "#39FF33", "#FC51FF", "#8C888C"],
+                    hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774", "#94FF90", "#FD90FF", "#AFA8AF"]
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+    </script>
 }
-    </tbody>
-</table>
+<div class="m-5 px-5">
+    <div class="row d-flexr pt-5">
+
+        <!--Grid column-->
+        <div class="col-md-6">
+            <h3 class="h3">Stock total</h3>
+            <canvas id="total"></canvas>
+        </div>
+        <div class="col-md-6">
+            <h3 class="h3">Varios</h3>
+            <canvas id="varios"></canvas>
+        </div>
+
+    </div>
+    <!--Grid row-->
+    <div class="row d-flex  my-5">
+
+        <!--Grid column-->
+        <div class="col-md-6">
+            <h3 class="h3">Camisetas</h3>
+            <canvas id="camisetas"></canvas>
+        </div>
+        <!--Grid column-->
+        <div class="col-md-6">
+            <h3 class="h3">Sudaderas</h3>
+            <canvas id="sudaderas"></canvas>
+        </div>
+    </div>
+</div>

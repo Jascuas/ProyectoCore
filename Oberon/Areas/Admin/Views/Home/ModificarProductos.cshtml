@@ -3,75 +3,84 @@
 @{
     ViewData["Title"] = "ModificarProducto";
 }
+<div class="col-12 my-5">
+    <section class="mb-4">
 
-<h2>ModificarProducto</h2>
+        <div class="row">
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id_Producto)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Tipo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Estado)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Precio)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Imagen)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Detalles)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Informacion)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id_Producto)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tipo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Estado)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Precio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Imagen)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Detalles)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Informacion)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+            <!--Grid column-->
+            <div class="col-md-12 text-center">
+                <div class="card shopping-cart">
+                    @if (Model != null)
+                    {
+                        <div class="card-header bg-dark text-light">
+                            Productos de la tienda
+                        </div>
+                        <div class="card-body ">
+
+                            <div class=" table-responsive-sm table-responsive-md">
+                                <table class="table table-hover ">
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Imagen</th>
+                                            <th>Nombre</th>
+                                            <th>Tipo</th>
+                                            <th>Tallas</th>
+                                            <th>Estado</th>
+                                            <th>Precio</th>
+                                            <th>Detalles</th>
+                                            <th>Informacion</th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (Producto u in Model)
+                                        {
+                                        <tr>
+                                            <td class="align-middle">@u.Id_Producto</td>
+                                            <td class="align-middle"><img class=" rounded z-depth-2 img-fluid mr-3" src="~/images/Productos/@u.Imagen" style="max-width: 150px"></td>
+                                            <td class="align-middle">@u.Nombre</td>
+                                            <td class="align-middle">@u.Tipo</td>
+                                            <td class="align-middle">
+                                                @foreach(Talla t in u.Tallas)
+                                                {
+                                                    @t.Size
+                                                }
+                                            </td>
+                                            <td class="align-middle">@u.Estado</td>
+                                            <td class="align-middle">@u.Precio</td>
+                                            <td class="align-middle">@u.Detalles</td>
+                                            <td class="align-middle">@u.Informacion</td>
+                                            <td class="align-middle"><a asp-action="Carrito" asp-controller="Home"><i class="far fa-edit text-success" aria-hidden="true"></i></a></td>
+                                            <td class="align-middle"><a asp-action="Carrito" asp-controller="Home"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a></td>
+                                        </tr>
+                                        }
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="card-header bg-dark text-light">
+                            Productos de la tienda
+                        </div>
+                        <h4 class="modal-title text-warning" id="myModalLabel">No hay productos</h4>
+                    }
+                </div>
+            </div>
+            <!--Grid column-->
+
+        </div>
+
+    </section>
+    <!--Section: Contact v.2-->
+</div>
+
+
+

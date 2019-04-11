@@ -1,71 +1,73 @@
 ﻿@model IEnumerable<Oberon.Models.Usuario>
-
 @{
     ViewData["Title"] = "ModificarUsuarios";
 }
+<div class="col-12 my-5">
+    <section class="mb-4">
 
-<h2>ModificarUsuarios</h2>
+        <div class="row">
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id_Usuario)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Apellidos)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fecha)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Rol)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id_Usuario)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Apellidos)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fecha)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rol)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+            <!--Grid column-->
+            <div class="col-md-12 text-center">
+                <div class="card shopping-cart">
+                    @if (Model != null)
+                    {
+                        <div class="card-header bg-dark text-light">
+                            Usuarios de la aplicacion
+                        </div>
+                        <div class="card-body ">
+
+                            <div class=" table-responsive-sm table-responsive-md">
+                                <table class="table table-hover ">
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Nombre</th>
+                                            <th>Apellidos</th>
+                                            <th>Username</th>
+                                            <th>Email</th>
+                                            <th>Rol</th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (Usuario u in Model)
+                                        {
+                                        <tr>
+                                            <td class="align-middle">@u.Id_Usuario</td>
+                                            <td class="align-middle">@u.Nombre </td>
+                                            <td class="align-middle">@u.Apellidos</td>
+                                            <td class="align-middle">@u.User</td>
+                                            <td class="align-middle">@u.Email</td>
+                                            <td class="align-middle">@u.Rol</td>
+                                            <td class="align-middle"><a asp-action="Carrito" asp-controller="Home"><i class="far fa-edit text-success" aria-hidden="true"></i></a></td>
+                                            <td class="align-middle"><a asp-action="Carrito" asp-controller="Home"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a></td>
+
+                                        </tr>
+                                        }
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="card-header bg-dark text-light">
+                            Usuarios de la aplicacion
+                        </div>
+                        <h4 class="modal-title text-warning" id="myModalLabel">No hay usuarios</h4>
+                    }
+                </div>
+            </div>
+            <!--Grid column-->
+
+        </div>
+
+    </section>
+    <!--Section: Contact v.2-->
+</div>
+
